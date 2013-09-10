@@ -1,3 +1,4 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <jsp:include page="include/header.jsp" />
 
 <section id="main">
@@ -27,7 +28,14 @@
 				</tr>
 			</thead>
 			<tbody>
-
+                <c:forEach items="${requestScope.companies}" var="company">
+                    <tr>
+                        <td>${company.name}</td>
+                        <td>${company.id}</td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                </c:forEach>
 				<tr>
 					<td><a href="#" onclick="">ThinkPad T420</a></td>
 					<td>2011-01-01</td>
