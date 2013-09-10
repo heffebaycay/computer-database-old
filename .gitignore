@@ -1,4 +1,6 @@
-build/
-target/
+.idea/
+computer-database.iml
+out/
 .settings/
 .classpath
+.project
