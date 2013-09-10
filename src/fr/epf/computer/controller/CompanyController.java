@@ -13,14 +13,13 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.List;
 
-@WebServlet(name = "/CompanyController")
+@WebServlet("/CompanyController")
 public class CompanyController extends HttpServlet {
     private static final long serialVersionUID = 1L;
 
     CompanyService companyService;
 
     public CompanyController() {
-        super();
         companyService = ServiceManager.INSTANCE.getCompanyService();
     }
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
