@@ -12,7 +12,7 @@
             </div>
             <button type="submit" class="btn btn-primary">Filter by name</button>
         </form>
-        <button class="btn btn-success" id="add" href="">Add Company</button>
+        <a class="btn btn-success" id="add" href="/company/add">Add Company</a>
     </div>
 
     <div style="margin-top: 20px;">

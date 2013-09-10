@@ -12,6 +12,13 @@ body {
     top: 0;
 }
 
+div#main {
+    position: relative;
+    padding: 5em 2em;
+    border-bottom: 1px solid #ccc;
+    min-height: 600px;
+}
+
 #table-company td,th {
     width: 50%;
     text-align: center;
