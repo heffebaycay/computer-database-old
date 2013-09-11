@@ -51,7 +51,7 @@ public class CompanyDaoImpl implements CompanyDao {
     }
 
     @Override
-    public Company findById(int id) {
+    public Company findById(long id) {
         EntityManager em = null;
         Company company = null;
 

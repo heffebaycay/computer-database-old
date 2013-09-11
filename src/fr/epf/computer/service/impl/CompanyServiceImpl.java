@@ -31,7 +31,7 @@ public class CompanyServiceImpl implements CompanyService {
         companyDao.create(company);
     }
 
-    public Company findById(int id) {
+    public Company findById(long id) {
         return companyDao.findById(id);
     }
 }
