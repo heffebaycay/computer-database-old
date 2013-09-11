@@ -622,5 +622,4 @@ insert into computer (id,name,introduced,discontinued,company_id) values (574,'i
 
 # --- !Downs
 
-delete from computer;
-delete from company;
+
