@@ -30,4 +30,8 @@ public class CompanyServiceImpl implements CompanyService {
     public void create(Company company) {
         companyDao.create(company);
     }
+
+    public Company findById(int id) {
+        return companyDao.findById(id);
+    }
 }

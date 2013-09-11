@@ -50,6 +50,28 @@ public class CompanyDaoImpl implements CompanyDao {
         return companies;
     }
 
+    @Override
+    public Company findById(int id) {
+        EntityManager em = null;
+        Company company = null;
+
+        try {
+            em = DaoManager.INSTANCE.getEntityManager();
+
+            company = (Company)  em.createQuery(
+                    "SELECT c FROM Company c WHERE c.id = :id"
+            ).setParameter("id", id)
+            .getSingleResult();
+            ;
+
+        } finally {
+            if (em != null)
+                em.close();
+        }
+
+        return company;
+    }
+
     public void create(Company company) {
         EntityManager em = null;
 
