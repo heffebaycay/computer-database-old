@@ -26,4 +26,8 @@ public class ComputerServiceImpl implements ComputerService {
         return computerDao.getComputers();
     }
 
+    @Override
+    public void create(Computer computer) {
+
+    }
 }

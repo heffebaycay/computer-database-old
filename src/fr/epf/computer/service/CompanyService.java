@@ -8,4 +8,6 @@ public interface CompanyService {
 
     List<Company> getCompanies();
     List<Company> searchByName(String name);
+    void create(Company company);
+    Company findById(int id);
 }
