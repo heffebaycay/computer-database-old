@@ -24,14 +24,12 @@
             </tr>
             </thead>
             <tbody>
-            <tr>
-                <td>1</td>
-                <td>Apple</td>
-            </tr>
-            <tr>
-                <td>2</td>
-                <td>Dell</td>
-            </tr>
+            <c:forEach items="${requestScope.companies}" var="company">
+                <tr>
+                    <td>${company.id}</td>
+                    <td>${company.name}</td>
+                </tr>
+            </c:forEach>
             </tbody>
         </table>
     </div>

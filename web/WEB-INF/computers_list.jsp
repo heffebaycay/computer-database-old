@@ -1,4 +1,4 @@
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jstl/core" %>
 <jsp:include page="include/header.jsp" />
 
 <div class="container">
@@ -26,24 +26,21 @@
             </tr>
             </thead>
             <tbody>
-            <tr>
-                <td>ThinkPad T420</td>
-                <td>2011-01-01</td>
-                <td>2013-03-04</td>
-                <td>Lenovo</td>
-            </tr>
-            <tr>
-                <td>Precision 3500</td>
-                <td>2010-05-07</td>
-                <td>2012-06-01</td>
-                <td>Dell</td>
-            </tr>
-            <tr>
-                <td>Mackbook Air</td>
-                <td>2005-05-09</td>
-                <td>2008-06-06</td>
-                <td>Apple</td>
-            </tr>
+            <c:forEach items="${requestScope.computers}" var="computer">
+                <tr>
+                    <td>${computer.name}</td>
+                    <td>${computer.introduced}</td>
+                    <td>${computer.discontinued}</td>
+                    <c:choose>
+                        <c:when test="${computer.company != null}">
+                            <td>${computer.company.name}</td>
+                        </c:when>
+                        <c:otherwise>
+                            <td>&nbsp;</td>
+                        </c:otherwise>
+                    </c:choose>
+                </tr>
+            </c:forEach>
             </tbody>
         </table>
     </div>
