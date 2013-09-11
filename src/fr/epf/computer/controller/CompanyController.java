@@ -13,7 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.List;
 
-@WebServlet("/CompanyController")
+@WebServlet("/company/list")
 public class CompanyController extends HttpServlet {
     private static final long serialVersionUID = 1L;
 
@@ -33,7 +33,7 @@ public class CompanyController extends HttpServlet {
         List<Company> companies = companyService.getCompanies();
         request.setAttribute("companies", companies);
 
-        RequestDispatcher rd = getServletContext().getRequestDispatcher(response.encodeURL("/dashboard.jsp"));
+        RequestDispatcher rd = getServletContext().getRequestDispatcher(response.encodeURL("/WEB-INF/companies_list.jsp"));
         rd.forward(request, response);
     }
 }

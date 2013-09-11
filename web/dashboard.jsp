@@ -1,5 +1,5 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<jsp:include page="include/header.jsp" />
+<jsp:include page="WEB-INF/include/header.jsp" />
 
 <section id="main">
 	<h1 id="homeTitle">456 Computers found</h1>
@@ -58,4 +58,4 @@
 		</table>
 </section>
 
-<jsp:include page="include/footer.jsp" />
+<jsp:include page="WEB-INF/include/footer.jsp" />

@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>EPF Computer Database</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <style type="text/css">
+        body {
+            min-height: 2000px;
+            padding-top: 70px;
+        }
+        #actions {
+            position: relative;
+        }
+
+        #actions #add {
+            position: absolute;
+            right: 0;
+            top: 0;
+        }
+
+        #table-company td,th {
+            width: 50%;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="navbar navbar-default navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="#">Application Computer Database</a>
+            </div>
+            <div class="navbar-collapse collapse">
+                <ul class="nav navbar-nav">
+                    <li class="active"><a href="#">Computers</a></li>
+                    <li><a href="#about">Companies</a></li>
+
+                </ul>
+            </div><!--/.nav-collapse -->
+        </div>
+    </div>
+
+    <div class="container">
+        <h1>2 Companies found</h1>
+
+        <div id="actions">
+            <form method="get" action="" class="form-inline" role="form">
+                <div class="form-group">
+                    <label class="sr-only" for="searchbox">Search</label>
+                    <input type="search" class="form-control" id="searchbox" name="search" value="" placeholder="Search name">
+                </div>
+                <button type="submit" class="btn btn-primary">Filter by name</button>
+            </form>
+            <button class="btn btn-success" id="add" href="">Add Company</button>
+        </div>
+
+        <div style="margin-top: 20px;">
+            <table class="table table-bordered table-striped" id="table-company">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Company name</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>1</td>
+                        <td>Apple</td>
+                    </tr>
+                    <tr>
+                        <td>2</td>
+                        <td>Dell</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+    </div> <!-- /container -->
+
+
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="js/jquery-1.10.2.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+</body>
+</html>

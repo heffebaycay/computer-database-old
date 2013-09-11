@@ -9,14 +9,14 @@ header h1 {
     font-size: 24px;
 }
 
-section#main {
+div#main {
     position: relative;
     padding: 5em 2em;
     border-bottom: 1px solid #ccc;
     min-height: 600px;
 } 
 
-section#main .topRight {
+div#main .topRight {
     position: absolute;
     right: 20px;
     top: 70px;
