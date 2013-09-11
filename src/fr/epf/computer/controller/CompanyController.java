@@ -30,7 +30,14 @@ public class CompanyController extends HttpServlet {
         if( companyService == null)
             return;
 
-        List<Company> companies = companyService.getCompanies();
+        List<Company> companies;
+        String searchQuery = request.getParameter("search");
+        if( searchQuery != null && !searchQuery.isEmpty()) {
+            companies = companyService.searchByName(searchQuery);
+        } else {
+            companies = companyService.getCompanies();
+        }
+
         request.setAttribute("companies", companies);
 
         RequestDispatcher rd = getServletContext().getRequestDispatcher(response.encodeURL("/WEB-INF/companies_list.jsp"));

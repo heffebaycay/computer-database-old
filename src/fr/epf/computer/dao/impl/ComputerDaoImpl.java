@@ -15,6 +15,27 @@ public class ComputerDaoImpl implements ComputerDao {
     }
 
     @Override
+    public List<Computer> searchByName(String name) {
+        List<Computer> computers = null;
+
+        EntityManager em = null;
+        try {
+            em = DaoManager.INSTANCE.getEntityManager();
+
+            computers = em.createQuery(
+                    "SELECT  c FROM Computer c WHERE c.name LIKE :compName"
+            ).setParameter("compName", "%" + name + "%")
+            .getResultList();
+
+        } finally {
+            if( em != null)
+                em.close();
+        }
+
+        return computers;
+    }
+
+    @Override
     @SuppressWarnings("unchecked")
     public List<Computer> getComputers() {
         EntityManager em = null;
