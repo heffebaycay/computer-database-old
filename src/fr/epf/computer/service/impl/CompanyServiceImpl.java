@@ -17,20 +17,32 @@ public class CompanyServiceImpl implements CompanyService {
         companyDao = DaoManager.INSTANCE.getCompanyDao();
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public List<Company> getCompanies() {
         return companyDao.getCompanies();
     }
 
+    /**
+     * {@inheritDoc}
+     */
     public List<Company> searchByName(String name) {
         return companyDao.searchByName(name);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void create(Company company) {
         companyDao.create(company);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     public Company findById(long id) {
         return companyDao.findById(id);
     }

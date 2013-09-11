@@ -18,10 +18,20 @@ public enum ServiceManager {
         computerService = new ComputerServiceImpl();
     }
 
+    /**
+     * Returns an instance of CompanyService
+     *
+     * @return
+     */
     public CompanyService getCompanyService() {
         return companyService;
     }
 
+    /**
+     * Returns an instance of ComputerService
+     *
+     * @return
+     */
     public ComputerService getComputerService() {
         return computerService;
     }
