@@ -23,6 +23,7 @@ public class AddCompanyController extends HttpServlet {
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
+        // Fetching company name POST parameter
         String companyName = request.getParameter("name");
         if(companyName != null && !companyName.isEmpty()) {
             companyService.create(

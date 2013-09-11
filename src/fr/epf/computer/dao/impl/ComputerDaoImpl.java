@@ -14,6 +14,9 @@ public class ComputerDaoImpl implements ComputerDao {
 
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public List<Computer> searchByName(String name) {
         List<Computer> computers = null;
@@ -35,6 +38,9 @@ public class ComputerDaoImpl implements ComputerDao {
         return computers;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     @SuppressWarnings("unchecked")
     public List<Computer> getComputers() {
@@ -52,6 +58,9 @@ public class ComputerDaoImpl implements ComputerDao {
         return computers;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void create(Computer computer) {
         EntityManager em = null;
