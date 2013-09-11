@@ -1,13 +1,17 @@
-create schema `computer-database-db`;
+create schema if not exists `computer-database-db`;
 use `computer-database-db`;
+
+drop table if exists computer;
+drop table if exists company;
+
 create table company (
-  id                        bigint not null,
+  id                        bigint not null AUTO_INCREMENT,
   name                      varchar(255),
   constraint pk_company primary key (id))
 ;
 
 create table computer (
-  id                        bigint not null,
+  id                        bigint not null AUTO_INCREMENT,
   name                      varchar(255),
   introduced                timestamp,
   discontinued              timestamp,
