@@ -23,10 +23,9 @@
         <div class="form-group">
             <label for="company">Company name:</label>
             <select name="company" id="company">
-                <option value="0">--</option>
-                <option value="1">Apple</option>
-                <option value="2">Dell</option>
-                <option value="3">Lenovo</option>
+	            <c:forEach items="${requestScope.companies}" var="company">
+	            	<option value="${company.id}" > ${company.name}</option>
+				</c:forEach>   
             </select>
         </div>
         <button class="btn btn-primary" type="submit">Add</button> or

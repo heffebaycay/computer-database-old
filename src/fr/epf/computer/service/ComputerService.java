@@ -7,4 +7,6 @@ import java.util.List;
 
 public interface ComputerService {
     List<Computer> getComputers();
+    
+    void create(Computer computer);
 }

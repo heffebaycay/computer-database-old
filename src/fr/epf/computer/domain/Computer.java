@@ -2,6 +2,8 @@ package fr.epf.computer.domain;
 
 
 import javax.persistence.*;
+
+
 import java.util.Date;
 
 @Entity
@@ -72,4 +74,31 @@ public class Computer {
     public void setCompany(Company company) {
         this.company = company;
     }
+    
+    public static class Builder {
+		private Computer computer;
+		
+		public Builder() {
+			computer = new Computer();
+		}
+		
+		public Builder id(int id) {
+			computer.setId(id);
+			return this;
+		}
+		
+		public Builder name(String name) {
+			computer.setName(name);
+			return this;
+		}
+		
+		public Builder company(Company company) {
+			computer.setCompany(company); // PB : on met une companie et pas un nom de compagnie...
+			return this;
+		}
+		
+		public Computer build() {
+			return computer;
+		}
+	}
 }
