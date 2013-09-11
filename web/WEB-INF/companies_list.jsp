@@ -1,8 +1,9 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <jsp:include page="include/header.jsp" />
 
 <div class="container">
-    <h1>2 Companies found</h1>
+    <h1>${fn:length(companies)} Companies found</h1>
 
     <div id="actions">
         <form method="get" action="" class="form-inline" role="form">

@@ -8,5 +8,6 @@ import java.util.List;
 public interface CompanyDao {
 
     List<Company> getCompanies();
+    List<Company> searchByName(String name);
 
 }

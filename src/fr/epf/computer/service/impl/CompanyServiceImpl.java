@@ -21,4 +21,8 @@ public class CompanyServiceImpl implements CompanyService {
     public List<Company> getCompanies() {
         return companyDao.getCompanies();
     }
+
+    public List<Company> searchByName(String name) {
+        return companyDao.searchByName(name);
+    }
 }

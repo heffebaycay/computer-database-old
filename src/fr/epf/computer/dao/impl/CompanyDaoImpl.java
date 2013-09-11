@@ -30,4 +30,23 @@ public class CompanyDaoImpl implements CompanyDao {
 
         return companies;
     }
+
+    public List<Company> searchByName(String name) {
+        List<Company> companies = null;
+        EntityManager em = null;
+
+        try {
+            em = DaoManager.INSTANCE.getEntityManager();
+            companies = em.createQuery(
+                    "SELECT c FROM Company c WHERE c.name LIKE :compName"
+            ).setParameter("compName", "%" + name + "%")
+            .getResultList();
+            ;
+        } finally {
+            if( em != null)
+                em.close();
+        }
+
+        return companies;
+    }
 }
