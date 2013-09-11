@@ -40,6 +40,8 @@ public class AddComputerController extends HttpServlet {
 
         // Computer name
         String name = request.getParameter("name");
+        // Storing given value in case something goes wrong and we need to display it back to the user
+        request.setAttribute("computerNameValue", name);
         if(name == null || name.isEmpty()) {
             // Error: invalid computer name
             request.setAttribute("bValidComputerName", false);
@@ -49,7 +51,11 @@ public class AddComputerController extends HttpServlet {
 
     	// Introduced & Discontinued dates
     	String recup = request.getParameter("dateIntroduced"); // recup en string puis convertion en Date
+        // Storing given value in case something goes wrong and we need to display it back to the user
+        request.setAttribute("dateIntroducedValue", recup);
+
     	SimpleDateFormat sdf = new SimpleDateFormat("y-MM-dd");
+        sdf.setLenient(false);
     	Date introduced = null;
     	try{
     		introduced = sdf.parse(recup);
@@ -63,6 +69,9 @@ public class AddComputerController extends HttpServlet {
         }
 
     	String recup2 = request.getParameter("dateDiscontinued"); // recup en string ici aussi
+        // Storing given value in case something goes wrong and we need to display it back to the user
+        request.setAttribute("dateDiscontinuedValue", recup2);
+
     	Date discontinued = null;
     	try{
     		discontinued = sdf.parse(recup2);
@@ -78,6 +87,9 @@ public class AddComputerController extends HttpServlet {
     	
     	// Company
     	String companyRecup = request.getParameter("company");
+        // Storing given value in case something goes wrong and we need to display it back to the user
+        request.setAttribute("companyIdValue", companyRecup);
+
         Company company = null;
     	try{
     		int companyId = Integer.parseInt(companyRecup);
@@ -101,6 +113,7 @@ public class AddComputerController extends HttpServlet {
             response.sendRedirect("/computer/list");
         }
         else {
+            request.setAttribute("bEverythingOkay", false);
             doGet(request, response);
         }
     }
