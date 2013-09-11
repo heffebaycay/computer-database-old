@@ -34,4 +34,27 @@ public class Company {
 
     @Column(name = "name")
     private String name;
+
+    public static class Builder {
+        private Company company;
+
+        public Builder() {
+            company = new Company();
+        }
+
+        public Builder id(int id) {
+            company.setId(id);
+            return this;
+        }
+
+        public Builder name(String name) {
+            company.setName(name);
+            return this;
+        }
+
+        public Company build() {
+            return company;
+        }
+
+    }
 }

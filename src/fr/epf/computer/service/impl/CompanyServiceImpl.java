@@ -25,4 +25,9 @@ public class CompanyServiceImpl implements CompanyService {
     public List<Company> searchByName(String name) {
         return companyDao.searchByName(name);
     }
+
+    @Override
+    public void create(Company company) {
+        companyDao.create(company);
+    }
 }

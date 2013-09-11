@@ -49,4 +49,21 @@ public class CompanyDaoImpl implements CompanyDao {
 
         return companies;
     }
+
+    public void create(Company company) {
+        EntityManager em = null;
+
+        try {
+            em = DaoManager.INSTANCE.getEntityManager();
+
+            em.getTransaction().begin();
+
+            em.persist(company);
+
+            em.getTransaction().commit();
+        } finally {
+            if( em != null)
+                em.close();
+        }
+    }
 }

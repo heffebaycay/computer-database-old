@@ -9,5 +9,6 @@ public interface CompanyDao {
 
     List<Company> getCompanies();
     List<Company> searchByName(String name);
+    void create(Company company);
 
 }
