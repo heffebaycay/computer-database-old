@@ -34,10 +34,19 @@ public class AddComputerController extends HttpServlet {
 	}
 	
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-    	
-    	// Computer name
-    	String name = request.getParameter("name");
-    	
+
+        // Boolean controlling whether all form inputs are valid
+        boolean bEverythingOkay = true;
+
+        // Computer name
+        String name = request.getParameter("name");
+        if(name == null || name.isEmpty()) {
+            // Error: invalid computer name
+            request.setAttribute("bValidComputerName", false);
+            bEverythingOkay = false;
+        }
+
+
     	// Introduced & Discontinued dates
     	String recup = request.getParameter("dateIntroduced"); // recup en string puis convertion en Date
     	SimpleDateFormat sdf = new SimpleDateFormat("y-MM-dd");
@@ -47,7 +56,12 @@ public class AddComputerController extends HttpServlet {
     	}catch(ParseException e){
     		
     	}
-    	
+        if(introduced == null) {
+            // Error: date introduced is invalid
+            request.setAttribute("bValidDateIntroduced", false);
+            bEverythingOkay = false;
+        }
+
     	String recup2 = request.getParameter("dateDiscontinued"); // recup en string ici aussi
     	Date discontinued = null;
     	try{
@@ -55,6 +69,12 @@ public class AddComputerController extends HttpServlet {
     	}catch(ParseException e){
     		
     	}
+        if(discontinued == null) {
+            // Error: date discontinued is invalid
+            request.setAttribute("bValidDateDiscontinued", false);
+            bEverythingOkay = false;
+        }
+
     	
     	// Company
     	String companyRecup = request.getParameter("company");
@@ -65,17 +85,24 @@ public class AddComputerController extends HttpServlet {
     	}catch(NumberFormatException e){
 
     	}
-    	
-    	//Fields tests
-    	if(name != null && !name.isEmpty())
-    		computerService.create( new Computer.Builder()
+        if(company == null) {
+            // Error: invalid company selected
+            request.setAttribute("bValidCompany", false);
+            bEverythingOkay = false;
+        }
+
+        if( bEverythingOkay ) {
+            computerService.create( new Computer.Builder()
                     .name(name)
                     .introduced(introduced)
                     .discontinued(discontinued)
                     .company(company)
                     .build());
-
-        response.sendRedirect("/computer/list");
+            response.sendRedirect("/computer/list");
+        }
+        else {
+            doGet(request, response);
+        }
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

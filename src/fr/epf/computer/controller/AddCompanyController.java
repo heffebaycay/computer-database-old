@@ -31,17 +31,17 @@ public class AddCompanyController extends HttpServlet {
                     .build()
             );
 
+            response.sendRedirect("/company/list");
+
         } else {
-            // Todo: Handle error
-            return;
+            // Error: company name is null/empty
+
+            request.setAttribute("bNameValid", false);
+            doGet(request, response);
         }
-
-        response.sendRedirect("/company/list");
-
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
 
         RequestDispatcher rd = getServletContext().getRequestDispatcher("/WEB-INF/add_company.jsp");
 
