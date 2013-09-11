@@ -34,33 +34,43 @@ public class AddComputerController extends HttpServlet {
 	
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
     	
+    	// Computer name
     	String name = request.getParameter("name");
     	
+    	// Introduced & Discontinued dates
     	String recup = request.getParameter("dateIntroduced"); // recup en string puis convertion en Date
     	SimpleDateFormat sdf = new SimpleDateFormat("y-MM-dd");
+    	Date introduced = null;
     	try{
-    		Date introduced = sdf.parse(recup);
+    		introduced = sdf.parse(recup);
     	}catch(ParseException e){
     		
     	}
     	
     	String recup2 = request.getParameter("dateDiscontinued"); // recup en string ici aussi
+    	Date discontinued = null;
     	try{
-    		Date discontinued = sdf.parse(recup);
+    		discontinued = sdf.parse(recup);
     	}catch(ParseException e){
     		
     	}
     	
-    	String company = request.getParameter("company");
+    	// Company
+    	String companyRecup = request.getParameter("company");
+    	try{
+    		int companyId = Integer.parseInt(companyRecup);
+    	}catch(NumberFormatException e){
+    		
+    	}
     	
-    	//Test de validite des champs
-    	if(name != null && !name.isEmpty() && company != null && !company.isEmpty())
-    		computerService.create(new Computer.Builder().name(name).company(null).build());
+    	//Fields tests
+    	if(name != null && !name.isEmpty())
+    		computerService.create(new Computer.Builder().name(name).introduced(introduced).discontinued(discontinued).company(null).build());
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         
-    	//Envoi de la liste des companies dans la requete :
+    	//Companies list send in request :
     	request.setAttribute("companies", companyService.getCompanies());
     	
     	RequestDispatcher rd = getServletContext().getRequestDispatcher("/WEB-INF/add_computer.jsp");

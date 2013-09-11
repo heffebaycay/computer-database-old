@@ -92,6 +92,16 @@ public class Computer {
 			return this;
 		}
 		
+		public Builder introduced(Date introduced) {
+			computer.setIntroduced(introduced);
+			return this;
+		}
+		
+		public Builder discontinued(Date discontinued) {
+			computer.setDiscontinued(discontinued);
+			return this;
+		}
+		
 		public Builder company(Company company) {
 			computer.setCompany(company); // PB : on met une companie et pas un nom de compagnie...
 			return this;
