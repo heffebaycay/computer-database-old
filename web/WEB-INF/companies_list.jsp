@@ -13,7 +13,7 @@
             </div>
             <button type="submit" class="btn btn-primary">Filter by name</button>
         </form>
-        <a class="btn btn-success" id="add" href="/company/add">Add Company</a>
+        <a class="btn btn-success" id="add" href="<c:url value="/company/add"/>"/>Add Company</a>
     </div>
 
     <div style="margin-top: 20px;">

@@ -23,8 +23,8 @@
         </div>
         <div class="navbar-collapse collapse">
             <ul class="nav navbar-nav">
-                <li class="active"><a href="#">Computers</a></li>
-                <li><a href="#about">Companies</a></li>
+                <li><a href="<c:url value="/computer/list"/>">Computers</a></li>
+                <li><a href="<c:url value="/company/list"/>">Companies</a></li>
 
             </ul>
         </div><!--/.nav-collapse -->
