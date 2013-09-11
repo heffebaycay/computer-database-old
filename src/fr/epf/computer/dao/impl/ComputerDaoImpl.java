@@ -52,4 +52,21 @@ public class ComputerDaoImpl implements ComputerDao {
         return computers;
     }
 
+    @Override
+    public void create(Computer computer) {
+        EntityManager em = null;
+
+        try {
+            em = DaoManager.INSTANCE.getEntityManager();
+
+            em.getTransaction().begin();
+
+            em.persist(computer);
+
+            em.getTransaction().commit();
+        } finally {
+            if( em != null)
+                em.close();
+        }
+    }
 }

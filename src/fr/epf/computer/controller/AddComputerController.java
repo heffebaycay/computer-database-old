@@ -7,6 +7,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import fr.epf.computer.domain.Company;
 import fr.epf.computer.domain.Computer;
 import fr.epf.computer.service.CompanyService;
 import fr.epf.computer.service.ComputerService;
@@ -50,22 +51,31 @@ public class AddComputerController extends HttpServlet {
     	String recup2 = request.getParameter("dateDiscontinued"); // recup en string ici aussi
     	Date discontinued = null;
     	try{
-    		discontinued = sdf.parse(recup);
+    		discontinued = sdf.parse(recup2);
     	}catch(ParseException e){
     		
     	}
     	
     	// Company
     	String companyRecup = request.getParameter("company");
+        Company company = null;
     	try{
     		int companyId = Integer.parseInt(companyRecup);
+            company = companyService.findById(companyId);
     	}catch(NumberFormatException e){
-    		
+
     	}
     	
     	//Fields tests
     	if(name != null && !name.isEmpty())
-    		computerService.create(new Computer.Builder().name(name).introduced(introduced).discontinued(discontinued).company(null).build());
+    		computerService.create( new Computer.Builder()
+                    .name(name)
+                    .introduced(introduced)
+                    .discontinued(discontinued)
+                    .company(company)
+                    .build());
+
+        response.sendRedirect("/computer/list");
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

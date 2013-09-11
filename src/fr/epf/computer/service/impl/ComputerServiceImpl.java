@@ -28,11 +28,6 @@ public class ComputerServiceImpl implements ComputerService {
     
     @Override
     public void create(Computer computer){
-    	computerDao.create(computer);
-    }
-
-    @Override
-    public void create(Computer computer) {
-
+        computerDao.create(computer);
     }
 }
