@@ -32,7 +32,16 @@ public class ComputerController extends HttpServlet {
         if( computerService == null)
             return;
 
-        List<Computer> computers = computerService.getComputers();
+        String searchQuery = request.getParameter("search");
+
+        List<Computer> computers = null;
+        if( searchQuery != null && !searchQuery.isEmpty()) {
+
+            computers = computerService.searchByName(searchQuery);
+
+        } else {
+            computers = computerService.getComputers();
+        }
 
         request.setAttribute("computers", computers);
 
