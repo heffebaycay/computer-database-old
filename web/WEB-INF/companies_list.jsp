@@ -1,8 +1,9 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <jsp:include page="include/header.jsp" />
 
 <div class="container">
-    <h1>2 Companies found</h1>
+    <h1>${fn:length(companies)} Companies found</h1>
 
     <div id="actions">
         <form method="get" action="" class="form-inline" role="form">
@@ -12,7 +13,7 @@
             </div>
             <button type="submit" class="btn btn-primary">Filter by name</button>
         </form>
-        <a class="btn btn-success" id="add" href="/company/add">Add Company</a>
+        <a class="btn btn-success" id="add" href="<c:url value="/company/add"/>"/>Add Company</a>
     </div>
 
     <div style="margin-top: 20px;">

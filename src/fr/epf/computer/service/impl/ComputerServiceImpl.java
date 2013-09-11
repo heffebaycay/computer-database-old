@@ -17,6 +17,11 @@ public class ComputerServiceImpl implements ComputerService {
     }
 
     @Override
+    public List<Computer> searchByName(String name) {
+        return computerDao.searchByName(name);
+    }
+
+    @Override
     public List<Computer> getComputers() {
         return computerDao.getComputers();
     }
