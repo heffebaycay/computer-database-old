@@ -25,14 +25,26 @@ public enum DaoManager {
         computerDao = new ComputerDaoImpl();
     }
 
+    /**
+     * Returns an instance of the DAO for the Company entity
+     * @return
+     */
     public CompanyDao getCompanyDao() {
         return companyDao;
     }
 
+    /**
+     * Returns an instance of the DAO for the the Computer entity
+     * @return
+     */
     public ComputerDao getComputerDao() {
         return computerDao;
     }
 
+    /**
+     * Returns an instance of the Entity Manager
+     * @return
+     */
     public EntityManager getEntityManager() {
         return emf.createEntityManager();
     }
