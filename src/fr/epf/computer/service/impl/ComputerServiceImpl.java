@@ -5,7 +5,7 @@ import fr.epf.computer.dao.ComputerDao;
 import fr.epf.computer.dao.manager.DaoManager;
 import fr.epf.computer.domain.Computer;
 import fr.epf.computer.service.ComputerService;
-import fr.epf.computer.wrapper.ComputerSearchWrapper;
+import fr.epf.computer.wrapper.SearchWrapper;
 
 import java.util.List;
 
@@ -21,7 +21,7 @@ public class ComputerServiceImpl implements ComputerService {
      * {@inheritDoc}
      */
     @Override
-    public ComputerSearchWrapper searchByName(String name, int offset, int nbRequested) {
+    public SearchWrapper<Computer> searchByName(String name, int offset, int nbRequested) {
         return computerDao.searchByName(name, offset, nbRequested);
     }
 
@@ -34,7 +34,7 @@ public class ComputerServiceImpl implements ComputerService {
     }
 
     @Override
-    public ComputerSearchWrapper getComputers(int offset, int nbRequested) {
+    public SearchWrapper<Computer> getComputers(int offset, int nbRequested) {
         return computerDao.getComputers(offset, nbRequested);
     }
 

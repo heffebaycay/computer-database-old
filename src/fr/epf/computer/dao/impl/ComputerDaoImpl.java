@@ -4,7 +4,7 @@ package fr.epf.computer.dao.impl;
 import fr.epf.computer.dao.ComputerDao;
 import fr.epf.computer.dao.manager.DaoManager;
 import fr.epf.computer.domain.Computer;
-import fr.epf.computer.wrapper.ComputerSearchWrapper;
+import fr.epf.computer.wrapper.SearchWrapper;
 
 import javax.persistence.EntityManager;
 import java.util.List;
@@ -12,9 +12,9 @@ import java.util.List;
 public class ComputerDaoImpl implements ComputerDao {
 
     @Override
-    public ComputerSearchWrapper getComputers(int offset, int nbRequested) {
+    public SearchWrapper<Computer> getComputers(int offset, int nbRequested) {
 
-        ComputerSearchWrapper searchWrapper;
+        SearchWrapper<Computer> searchWrapper = null;
         List<Computer> computers;
         EntityManager em = null;
 
@@ -29,10 +29,9 @@ public class ComputerDaoImpl implements ComputerDao {
 
             long totalComputerCount = (Long) em.createQuery("SELECT COUNT (c) FROM Computer c").getSingleResult();
 
-            searchWrapper = new ComputerSearchWrapper.Builder()
-                                .computers(computers)
-                                .totalQueryCount(totalComputerCount)
-                                .build();
+            searchWrapper = new SearchWrapper<Computer>()
+                                .setResults(computers)
+                                .setTotalQueryCount(totalComputerCount);
 
         } finally {
             if( em != null )
@@ -49,10 +48,10 @@ public class ComputerDaoImpl implements ComputerDao {
      * {@inheritDoc}
      */
     @Override
-    public ComputerSearchWrapper searchByName(String name, int offset, int nbRequested) {
+    public SearchWrapper<Computer> searchByName(String name, int offset, int nbRequested) {
         List<Computer> computers = null;
         long computerCount = -1;
-        ComputerSearchWrapper searchWrapper = null;
+        SearchWrapper<Computer> searchWrapper = null;
 
         EntityManager em = null;
         try {
@@ -70,11 +69,9 @@ public class ComputerDaoImpl implements ComputerDao {
             ).setParameter("compName", "%" + name + "%")
                     .getSingleResult();
 
-            searchWrapper = new ComputerSearchWrapper.Builder()
-                            .computers(computers)
-                            .totalQueryCount(computerCount)
-                            .build();
-
+            searchWrapper = new SearchWrapper<Computer>()
+                                .setResults(computers)
+                                .setTotalQueryCount(computerCount);
 
         } finally {
             if( em != null)

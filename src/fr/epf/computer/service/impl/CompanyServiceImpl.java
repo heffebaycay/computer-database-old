@@ -5,6 +5,7 @@ import fr.epf.computer.dao.impl.CompanyDaoImpl;
 import fr.epf.computer.dao.manager.DaoManager;
 import fr.epf.computer.domain.Company;
 import fr.epf.computer.service.CompanyService;
+import fr.epf.computer.wrapper.SearchWrapper;
 
 import java.util.List;
 
@@ -28,8 +29,8 @@ public class CompanyServiceImpl implements CompanyService {
     /**
      * {@inheritDoc}
      */
-    public List<Company> searchByName(String name) {
-        return companyDao.searchByName(name);
+    public SearchWrapper<Company> searchByName(String name, int offset, int nbRequested) {
+        return companyDao.searchByName(name, offset, nbRequested);
     }
 
     /**
@@ -45,5 +46,9 @@ public class CompanyServiceImpl implements CompanyService {
      */
     public Company findById(long id) {
         return companyDao.findById(id);
+    }
+
+    public SearchWrapper<Company> getCompanies(int offset, int nbRequested) {
+        return companyDao.getCompanies(offset, nbRequested);
     }
 }

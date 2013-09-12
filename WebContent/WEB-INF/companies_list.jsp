@@ -35,6 +35,61 @@
         </table>
     </div>
 
+    <c:if test="${ currentPage != null }">
+        <div class="row">
+            <div style="margin-left: 30px;">
+                <ul class="pagination">
+                    <c:if test="${ currentPage gt 1 }">
+                        <c:choose>
+                            <c:when test="${ searchQuery != null }" >
+                                <li><a href="<c:url value="/company/list?search=${searchQuery}&p=${currentPage - 1}"/>">&laquo;</a></li>
+                            </c:when>
+                            <c:otherwise>
+                                <li><a href="<c:url value="/company/list?p=${currentPage - 1}"/>">&laquo;</a></li>
+                            </c:otherwise>
+                        </c:choose>
+                    </c:if>
+                    <c:choose>
+                        <c:when test="${searchQuery != null}">
+                            <c:forEach begin="1" end="${totalPage}" var="i">
+                                <c:choose>
+                                    <c:when test="${i == currentPage}">
+                                        <li class="active"><a>${i}</a></li>
+                                    </c:when>
+                                    <c:otherwise>
+                                        <li><a href="<c:url value="/company/list?search=${searchQuery}&p=${i}"/>">${i}</a></li>
+                                    </c:otherwise>
+                                </c:choose>
+                            </c:forEach>
+                        </c:when>
+                        <c:otherwise>
+                            <c:forEach begin="1" end="${totalPage}" var="i">
+                                <c:choose>
+                                    <c:when test="${i == currentPage}">
+                                        <li class="active"><a>${i}</a></li>
+                                    </c:when>
+                                    <c:otherwise>
+                                        <li><a href="<c:url value="/company/list?p=${i}"/>">${i}</a></li>
+                                    </c:otherwise>
+                                </c:choose>
+                            </c:forEach>
+                        </c:otherwise>
+                    </c:choose>
+                    <c:if test="${currentPage lt totalPage}">
+                        <c:choose>
+                            <c:when test="${ searchQuery != null }" >
+                                <li><a href="<c:url value="/company/list?search=${searchQuery}&p=${currentPage + 1}"/>">&raquo;</a></li>
+                            </c:when>
+                            <c:otherwise>
+                                <li><a href="<c:url value="/company/list?p=${currentPage + 1}"/>">&raquo;</a></li>
+                            </c:otherwise>
+                        </c:choose>
+                    </c:if>
+                </ul>
+            </div>
+        </div>
+    </c:if>
+
 </div> <!-- /container -->
 
 <jsp:include page="include/footer.jsp" />

@@ -1,7 +1,7 @@
 package fr.epf.computer.dao;
 
 import fr.epf.computer.domain.Computer;
-import fr.epf.computer.wrapper.ComputerSearchWrapper;
+import fr.epf.computer.wrapper.SearchWrapper;
 
 import java.util.List;
 
@@ -22,7 +22,7 @@ public interface ComputerDao {
      * @param name Any substring of the name of the computer(s) we're looking for
      * @return A list of matching computers
      */
-    ComputerSearchWrapper searchByName(String name, int offset, int nbRequested);
+    SearchWrapper<Computer> searchByName(String name, int offset, int nbRequested);
 
     /**
      * Create a computer in the DataSource based on an instance of Computer
@@ -31,5 +31,5 @@ public interface ComputerDao {
      */
     void create (Computer computer);
 
-    ComputerSearchWrapper getComputers(int offset, int nbRequested);
+    SearchWrapper<Computer> getComputers(int offset, int nbRequested);
 }
