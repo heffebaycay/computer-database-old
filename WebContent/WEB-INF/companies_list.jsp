@@ -30,7 +30,7 @@
                 <tr>
                     <td>${company.id}</td>
                     <td>${company.name}</td>
-                    <td><a href="<c:url value="/company/edit?id=${company.id}"/>"><span class="glyphicon glyphicon-edit"></span></a> / <a href="<c:url value="/company/remove?id=${company.id}"/>"><span class="glyphicon glyphicon-remove"></span></a></td>
+                    <td><a href="<c:url value="/company/edit?id=${company.id}"/>"><span class="glyphicon glyphicon-edit"></span></a></td>
                 </tr>
             </c:forEach>
             </tbody>
