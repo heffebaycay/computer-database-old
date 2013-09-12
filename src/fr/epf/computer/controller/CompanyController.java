@@ -60,6 +60,7 @@ public class CompanyController extends HttpServlet {
 
             long totalPage = (long) Math.ceil( totalCompanyCount * 1.0 / nbCompaniesPerPage );
             request.setAttribute("totalPage", totalPage);
+            request.setAttribute("totalCount", totalCompanyCount);
             request.setAttribute("searchQuery", searchQuery);
 
         } else {
@@ -72,6 +73,7 @@ public class CompanyController extends HttpServlet {
             long totalPage = (long) Math.ceil( totalCompanyCount * 1.0 / nbCompaniesPerPage);
 
             request.setAttribute("totalPage", totalPage);
+            request.setAttribute("totalCount", totalCompanyCount);
         }
 
         request.setAttribute("companies", companies);

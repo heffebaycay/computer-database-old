@@ -60,6 +60,7 @@ public class ComputerController extends HttpServlet {
 
             long totalPage = (long) Math.ceil( totalComputerCount * 1.0 / nbComputerPerPage);
             request.setAttribute("totalPage", totalPage);
+            request.setAttribute("totalCount", totalComputerCount);
             request.setAttribute("searchQuery", searchQuery);
 
         } else {
@@ -69,6 +70,7 @@ public class ComputerController extends HttpServlet {
             long totalComputerCount = searchWrapper.getTotalQueryCount();
             long totalPage = (long) Math.ceil( totalComputerCount * 1.0 / nbComputerPerPage );
             request.setAttribute("totalPage", totalPage);
+            request.setAttribute("totalCount", totalComputerCount);
         }
 
         request.setAttribute("computers", computers);

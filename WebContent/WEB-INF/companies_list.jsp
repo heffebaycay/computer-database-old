@@ -3,7 +3,7 @@
 <jsp:include page="include/header.jsp" />
 
 <div class="container">
-    <h1>${fn:length(companies)} Companies found</h1>
+    <h1>${totalCount} Companies found</h1>
 
     <div id="actions">
         <form method="get" action="" class="form-inline" role="form">
