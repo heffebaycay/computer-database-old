@@ -51,7 +51,7 @@ public class AddComputerController extends HttpServlet {
 
 
     	// Introduced & Discontinued dates
-    	String recup = request.getParameter("dateIntroduced"); // recup en string puis convertion en Date
+    	String recup = request.getParameter("dateIntroduced"); // Getting the String then convert into Date
         // Storing given value in case something goes wrong and we need to display it back to the user
         request.setAttribute("dateIntroducedValue", recup);
 
@@ -74,10 +74,10 @@ public class AddComputerController extends HttpServlet {
             bEverythingOkay = false;
         }
 
-    	String recup2 = request.getParameter("dateDiscontinued"); // recup en string ici aussi
+    	String recup2 = request.getParameter("dateDiscontinued"); // Get the String here too
         // Storing given value in case something goes wrong and we need to display it back to the user
         request.setAttribute("dateDiscontinuedValue", recup2);
-
+    
     	Date discontinued = null;
     	try{
     		discontinued = sdf.parse(recup2);
