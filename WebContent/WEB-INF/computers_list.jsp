@@ -3,10 +3,10 @@
 <jsp:include page="include/header.jsp" />
 
 <div class="container">
-    <h1>${fn:length(computers)} Computers found</h1>
+    <h1>${totalCount} Computers found</h1>
 
     <div id="actions">
-        <form method="get" action="" class="form-inline" role="form">
+        <form method="get" action="<c:url value="/computer/list"/>" class="form-inline" role="form">
             <div class="form-group">
                 <label class="sr-only" for="searchbox">Search</label>
                 <input type="search" class="form-control" id="searchbox" name="search" value="" placeholder="Search name">
@@ -45,6 +45,61 @@
             </tbody>
         </table>
     </div>
+
+    <c:if test="${ currentPage != null }">
+        <div class="row">
+            <div style="margin-left: 30px;">
+                <ul class="pagination">
+                    <c:if test="${ currentPage gt 1 }">
+                        <c:choose>
+                            <c:when test="${ searchQuery != null }" >
+                                <li><a href="<c:url value="/computer/list?search=${searchQuery}&p=${currentPage - 1}"/>">&laquo;</a></li>
+                            </c:when>
+                            <c:otherwise>
+                                <li><a href="<c:url value="/computer/list?p=${currentPage - 1}"/>">&laquo;</a></li>
+                            </c:otherwise>
+                        </c:choose>
+                    </c:if>
+                    <c:choose>
+                        <c:when test="${searchQuery != null}">
+                            <c:forEach begin="1" end="${totalPage}" var="i">
+                                <c:choose>
+                                    <c:when test="${i == currentPage}">
+                                        <li class="active"><a>${i}</a></li>
+                                    </c:when>
+                                    <c:otherwise>
+                                        <li><a href="<c:url value="/computer/list?search=${searchQuery}&p=${i}"/>">${i}</a></li>
+                                    </c:otherwise>
+                                </c:choose>
+                            </c:forEach>
+                        </c:when>
+                        <c:otherwise>
+                            <c:forEach begin="1" end="${totalPage}" var="i">
+                                <c:choose>
+                                    <c:when test="${i == currentPage}">
+                                        <li class="active"><a>${i}</a></li>
+                                    </c:when>
+                                    <c:otherwise>
+                                        <li><a href="<c:url value="/computer/list?p=${i}"/>">${i}</a></li>
+                                    </c:otherwise>
+                                </c:choose>
+                            </c:forEach>
+                        </c:otherwise>
+                    </c:choose>
+                    <c:if test="${currentPage lt totalPage}">
+                        <c:choose>
+                            <c:when test="${ searchQuery != null }" >
+                                <li><a href="<c:url value="/computer/list?search=${searchQuery}&p=${currentPage + 1}"/>">&raquo;</a></li>
+                            </c:when>
+                            <c:otherwise>
+                                <li><a href="<c:url value="/computer/list?p=${currentPage + 1}"/>">&raquo;</a></li>
+                            </c:otherwise>
+                        </c:choose>
+                    </c:if>
+                </ul>
+            </div>
+        </div>
+    </c:if>
 
 </div> <!-- /container -->
 

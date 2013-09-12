@@ -3,6 +3,7 @@ package fr.epf.computer.controller;
 import fr.epf.computer.domain.Computer;
 import fr.epf.computer.service.ComputerService;
 import fr.epf.computer.service.manager.ServiceManager;
+import fr.epf.computer.wrapper.SearchWrapper;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -32,15 +33,44 @@ public class ComputerController extends HttpServlet {
         if( computerService == null)
             return;
 
-        String searchQuery = request.getParameter("search");
-
         List<Computer> computers = null;
-        if( searchQuery != null && !searchQuery.isEmpty()) {
+        SearchWrapper<Computer> searchWrapper;
 
-            computers = computerService.searchByName(searchQuery);
+        int nbComputerPerPage = 25;
+
+        String strPage = request.getParameter("p");
+        if(strPage == null || strPage.isEmpty())
+            strPage = "1";
+
+        int iPage;
+        try {
+            iPage = Integer.parseInt(strPage);
+        } catch ( NumberFormatException e ) {
+            iPage = 1;
+        }
+
+        request.setAttribute("currentPage", iPage);
+
+        String searchQuery = request.getParameter("search");
+        if( searchQuery != null && !searchQuery.isEmpty()) {
+            // User queried specific computers
+            searchWrapper = computerService.searchByName(searchQuery, (iPage - 1) * nbComputerPerPage, nbComputerPerPage);
+            computers = searchWrapper.getResults();
+            long totalComputerCount = searchWrapper.getTotalQueryCount();
+
+            long totalPage = (long) Math.ceil( totalComputerCount * 1.0 / nbComputerPerPage);
+            request.setAttribute("totalPage", totalPage);
+            request.setAttribute("totalCount", totalComputerCount);
+            request.setAttribute("searchQuery", searchQuery);
 
         } else {
-            computers = computerService.getComputers();
+            // Display all computers
+            searchWrapper = computerService.getComputers( (iPage - 1) * nbComputerPerPage, nbComputerPerPage );
+            computers = searchWrapper.getResults();
+            long totalComputerCount = searchWrapper.getTotalQueryCount();
+            long totalPage = (long) Math.ceil( totalComputerCount * 1.0 / nbComputerPerPage );
+            request.setAttribute("totalPage", totalPage);
+            request.setAttribute("totalCount", totalComputerCount);
         }
 
         request.setAttribute("computers", computers);
