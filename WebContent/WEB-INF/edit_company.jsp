@@ -4,7 +4,7 @@
 <div class="container" id="main">
     <h1>Edit Company</h1>
     
-    <form method="post" role="form">
+    <form method="post" role="form" action="<c:url value="/company/add?id=${company.id}" />">
     <input type="hidden" id="companyId" name="companyId" value="id">
         <div class="form-group">
             <label for="name">New Company Name :</label>

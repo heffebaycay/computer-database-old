@@ -19,7 +19,7 @@
         </c:choose>
     </c:if>
 
-    <form method="post" role="form" action="<c:url value="/computer/edit"/>">
+    <form method="post" role="form" action="<c:url value="/computer/edit?id=${computer.id}"/>">
         <div class="form-group<c:if test="${ bValidComputerName != null && bValidComputerName == false }"> has-error</c:if>">
             <label for="name">Computer name:</label>
             <input type="text" class="form-control" id="name" name="name"
