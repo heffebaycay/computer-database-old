@@ -32,15 +32,39 @@ public class ComputerController extends HttpServlet {
         if( computerService == null)
             return;
 
-        String searchQuery = request.getParameter("search");
-
         List<Computer> computers = null;
-        if( searchQuery != null && !searchQuery.isEmpty()) {
 
-            computers = computerService.searchByName(searchQuery);
+        int nbComputerPerPage = 25;
+
+        String strPage = request.getParameter("p");
+        if(strPage == null || strPage.isEmpty())
+            strPage = "1";
+
+        int iPage;
+        try {
+            iPage = Integer.parseInt(strPage);
+        } catch ( NumberFormatException e ) {
+            iPage = 1;
+        }
+
+        request.setAttribute("currentPage", iPage);
+
+        String searchQuery = request.getParameter("search");
+        if( searchQuery != null && !searchQuery.isEmpty()) {
+            // User queried specific computers
+            computers = computerService.searchByName(searchQuery, (iPage - 1) * nbComputerPerPage, nbComputerPerPage);
+            long totalComputerCount = computerService.getTotalComputerCountForSearch( searchQuery );
+
+            long totalPage = (long) Math.ceil( totalComputerCount * 1.0 / nbComputerPerPage);
+            request.setAttribute("totalPage", totalPage);
+            request.setAttribute("searchQuery", searchQuery);
 
         } else {
-            computers = computerService.getComputers();
+            // Display all computers
+            computers = computerService.getComputers( (iPage - 1) * nbComputerPerPage, nbComputerPerPage );
+            long totalComputerCount = computerService.getTotalComputerCount();
+            long totalPage = (long) Math.ceil( totalComputerCount * 1.0 / nbComputerPerPage );
+            request.setAttribute("totalPage", totalPage);
         }
 
         request.setAttribute("computers", computers);

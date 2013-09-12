@@ -20,8 +20,8 @@ public class ComputerServiceImpl implements ComputerService {
      * {@inheritDoc}
      */
     @Override
-    public List<Computer> searchByName(String name) {
-        return computerDao.searchByName(name);
+    public List<Computer> searchByName(String name, int offset, int nbRequested) {
+        return computerDao.searchByName(name, offset, nbRequested);
     }
 
     /**
@@ -30,6 +30,21 @@ public class ComputerServiceImpl implements ComputerService {
     @Override
     public List<Computer> getComputers() {
         return computerDao.getComputers();
+    }
+
+    @Override
+    public List<Computer> getComputers(int offset, int nbRequested) {
+        return computerDao.getComputers(offset, nbRequested);
+    }
+
+    @Override
+    public long getTotalComputerCount() {
+        return computerDao.getTotalComputerCount();
+    }
+
+    @Override
+    public long getTotalComputerCountForSearch(String name) {
+        return computerDao.getTotalComputerCountForSearch(name);
     }
 
     /**

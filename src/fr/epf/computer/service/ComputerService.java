@@ -15,11 +15,17 @@ public interface ComputerService {
     /**
      * @see fr.epf.computer.dao.ComputerDao#searchByName(String)
      */
-    List<Computer> searchByName(String name);
+    List<Computer> searchByName(String name, int offset, int nbRequested);
 
     /**
      * @see fr.epf.computer.dao.ComputerDao#create(fr.epf.computer.domain.Computer)
      */
     void create(Computer computer);
+
+    List<Computer> getComputers(int offset, int nbRequested);
+
+    long getTotalComputerCount();
+
+    long getTotalComputerCountForSearch(String name);
     
 }
