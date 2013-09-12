@@ -85,6 +85,51 @@ public class ComputerDaoImpl implements ComputerDao {
      * {@inheritDoc}
      */
     @Override
+    public void update(Computer computer) {
+        EntityManager em = null;
+
+        try {
+            em = DaoManager.INSTANCE.getEntityManager();
+
+            em.getTransaction().begin();
+
+            em.merge(computer);
+
+            em.getTransaction().commit();
+        } finally {
+            if( em != null)
+                em.close();
+        }
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public Computer findById(long id) {
+        EntityManager em = null;
+        Computer computer = null;
+
+        try {
+            em = DaoManager.INSTANCE.getEntityManager();
+
+            computer = (Computer) em.createQuery(
+                    "SELECT c FROM Computer c WHERE c.id = :computerId"
+            ).setParameter("computerId", id)
+             .getSingleResult();
+
+        } finally {
+            if( em != null )
+                em.close();
+        }
+
+        return computer;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
     @SuppressWarnings("unchecked")
     public List<Computer> getComputers() {
         EntityManager em = null;

@@ -24,5 +24,15 @@ public interface ComputerService {
     void create(Computer computer);
 
     SearchWrapper<Computer> getComputers(int offset, int nbRequested);
+
+    /**
+     * @see fr.epf.computer.dao.ComputerDao#findById(long)
+     */
+    Computer findById(long id);
+
+    /**
+     * @see fr.epf.computer.dao.ComputerDao#update(fr.epf.computer.domain.Computer)
+     */
+    void update(Computer computer);
     
 }

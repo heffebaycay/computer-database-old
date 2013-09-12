@@ -42,6 +42,22 @@ public class ComputerServiceImpl implements ComputerService {
      * {@inheritDoc}
      */
     @Override
+    public void update(Computer computer) {
+        computerDao.update(computer);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public Computer findById(long id) {
+        return computerDao.findById(id);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
     public void create(Computer computer){
         computerDao.create(computer);
     }
