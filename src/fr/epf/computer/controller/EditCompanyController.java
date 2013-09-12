@@ -18,7 +18,6 @@ import fr.epf.computer.service.manager.ServiceManager;
 public class EditCompanyController extends HttpServlet{
 	
 	CompanyService companyService;
-	Company company;
 	
 	public EditCompanyController(){
 		companyService = ServiceManager.INSTANCE.getCompanyService();
@@ -26,32 +25,72 @@ public class EditCompanyController extends HttpServlet{
 	
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
+		boolean bEverythingOkay = true;
+		
 		String newName = request.getParameter("name"); // Getting the new company name
-		if(newName != null && !newName.isEmpty()){ // Verify the name
-			company.setName(newName); // Editing the company name
-			response.sendRedirect("/company/list"); // Redirect to the companies list
-		}else {
-            // Todo: Handle error
-            return;
-        }
+		if(newName != null && !newName.trim().isEmpty()){ // Verify the name
+			bEverythingOkay = false;
+			request.setAttribute("bEverythingOkay", false);
+		}
+		
+		// We need to get the ID to edit the company
+		String strCompanyId = request.getParameter("id");
+		// Verifying if ID is a long :
+		long test;
+		try{
+			test = Long.parseLong(strCompanyId);
+		}catch(NumberFormatException e){
+			System.out.println(e.getMessage()); // Show exception message
+			response.sendRedirect("/company/add");
+			return;
+		}
+		
+		if(bEverythingOkay) {
+			Company foundCompany = companyService.findById(test);
+			if(foundCompany == null){
+				response.sendRedirect("/company/add");
+				return;
+			}
+			
+			foundCompany.setName(newName);
+			
+			companyService.update(foundCompany);
+			
+			request.setAttribute("bEverythingOkay", true);
+			request.setAttribute("id", strCompanyId);
+			doGet(request, response);
+		} else {
+			request.setAttribute("id", strCompanyId);
+			doGet(request, response);
+		}
+		
+		
 		
 	}
 	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 		// We need to get the ID to edit the company
-		String recup = request.getParameter("id");
+		String strCompanyId = request.getParameter("id");
+		if(strCompanyId == null){
+			strCompanyId = (String)request.getAttribute("id");
+		}
 		// Verifying if ID is a long :
+		long test;
 		try{
-			long test = Long.parseLong(recup);
-			Company foundCompany = companyService.findById(test);
-			if(foundCompany != null){
-				company = foundCompany;
-				request.setAttribute("company", company);
-			}
+			test = Long.parseLong(strCompanyId);
 		}catch(NumberFormatException e){
 			System.out.println(e.getMessage()); // Show exception message
+			response.sendRedirect("/company/add");
+			return;
 		}
+		Company foundCompany = companyService.findById(test);
+		if(foundCompany == null){
+			response.sendRedirect("/company/add");
+			return;
+		}
+	
+		request.setAttribute("company", foundCompany);
 		RequestDispatcher rd = getServletContext().getRequestDispatcher("/WEB-INF/edit_company.jsp");
 
         rd.forward(request, response);

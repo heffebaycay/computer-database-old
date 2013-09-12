@@ -51,4 +51,8 @@ public class CompanyServiceImpl implements CompanyService {
     public SearchWrapper<Company> getCompanies(int offset, int nbRequested) {
         return companyDao.getCompanies(offset, nbRequested);
     }
+    
+    public void update(Company company){
+    	companyDao.update(company);
+    }
 }

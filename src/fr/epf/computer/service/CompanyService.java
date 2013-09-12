@@ -30,4 +30,6 @@ public interface CompanyService {
     Company findById(long id);
 
     SearchWrapper<Company> getCompanies(int offset, int nbRequested);
+    
+    void update(Company company);
 }

@@ -150,4 +150,21 @@ public class CompanyDaoImpl implements CompanyDao {
                 em.close();
         }
     }
+    
+    public void update(Company company){
+    	EntityManager em = null;
+
+        try {
+            em = DaoManager.INSTANCE.getEntityManager();
+
+            em.getTransaction().begin();
+
+            em.merge(company);
+
+            em.getTransaction().commit();
+        } finally {
+            if( em != null)
+                em.close();
+        }
+    }
 }

@@ -41,5 +41,7 @@ public interface CompanyDao {
 
 
     SearchWrapper<Company> getCompanies(int offset, int nbRequested);
+    
+    void update(Company company);
 
 }
