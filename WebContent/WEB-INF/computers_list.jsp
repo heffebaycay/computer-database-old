@@ -24,6 +24,7 @@
                 <th>Date introduced</th>
                 <th>Date discontinued</th>
                 <th>Company</th>
+                <th>Actions</th>
             </tr>
             </thead>
             <tbody>
@@ -40,6 +41,7 @@
                             <td>&nbsp;</td>
                         </c:otherwise>
                     </c:choose>
+                    <td><a href="<c:url value="/computer/edit?id=${computer.id}"/>"><span class="glyphicon glyphicon-edit"></span></a> / <a href="<c:url value="/computer/remove?id=${computer.id}"/>"><span class="glyphicon glyphicon-remove"></span></a></td>
                 </tr>
             </c:forEach>
             </tbody>
