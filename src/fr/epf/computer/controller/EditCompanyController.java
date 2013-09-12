@@ -28,7 +28,7 @@ public class EditCompanyController extends HttpServlet{
 		boolean bEverythingOkay = true;
 		
 		String newName = request.getParameter("name"); // Getting the new company name
-		if(newName != null && !newName.trim().isEmpty()){ // Verify the name
+		if(newName == null || newName.trim().isEmpty()){ // Verify the name
 			bEverythingOkay = false;
 			request.setAttribute("bEverythingOkay", false);
 		}
