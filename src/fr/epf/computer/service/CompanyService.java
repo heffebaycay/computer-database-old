@@ -1,6 +1,7 @@
 package fr.epf.computer.service;
 
 import fr.epf.computer.domain.Company;
+import fr.epf.computer.wrapper.SearchWrapper;
 
 import java.util.List;
 
@@ -14,9 +15,9 @@ public interface CompanyService {
 
     /**
      *
-     * @see fr.epf.computer.dao.CompanyDao#searchByName(String)
+     * @see fr.epf.computer.dao.CompanyDao#searchByName(String, int, int)
      */
-    List<Company> searchByName(String name);
+    SearchWrapper<Company> searchByName(String name, int offset, int nbRequested);
 
     /**
      * @see fr.epf.computer.dao.CompanyDao#create(fr.epf.computer.domain.Company)
@@ -27,4 +28,6 @@ public interface CompanyService {
      * @see fr.epf.computer.dao.CompanyDao#findById(long)
      */
     Company findById(long id);
+
+    SearchWrapper<Company> getCompanies(int offset, int nbRequested);
 }
