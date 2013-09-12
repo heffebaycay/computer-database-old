@@ -1,5 +1,4 @@
 body {
-    min-height: 2000px;
     padding-top: 70px;
 }
 #actions {
@@ -14,9 +13,8 @@ body {
 
 div#main {
     position: relative;
-    padding: 5em 2em;
+    padding-bottom: 2em;
     border-bottom: 1px solid #ccc;
-    min-height: 600px;
 }
 
 #table-company td,th {

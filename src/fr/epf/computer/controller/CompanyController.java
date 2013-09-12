@@ -33,8 +33,14 @@ public class CompanyController extends HttpServlet {
         List<Company> companies;
         String searchQuery = request.getParameter("search");
         if( searchQuery != null && !searchQuery.isEmpty()) {
+            /* If we actually have something to using as a search query, let's just kindly
+             * ask the Company Service to find all companies matching that name.
+             */
             companies = companyService.searchByName(searchQuery);
         } else {
+            /*
+              User didn't give us anything to search on. Let's just show him all companies.
+             */
             companies = companyService.getCompanies();
         }
 

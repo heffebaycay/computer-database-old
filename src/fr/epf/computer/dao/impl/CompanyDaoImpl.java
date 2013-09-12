@@ -14,6 +14,10 @@ public class CompanyDaoImpl implements CompanyDao {
 
     }
 
+
+    /**
+     * {@inheritDoc}
+     */
     @Override
     @SuppressWarnings("unchecked")
     public List<Company> getCompanies() {
@@ -31,6 +35,9 @@ public class CompanyDaoImpl implements CompanyDao {
         return companies;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     public List<Company> searchByName(String name) {
         List<Company> companies = null;
         EntityManager em = null;
@@ -50,6 +57,10 @@ public class CompanyDaoImpl implements CompanyDao {
         return companies;
     }
 
+
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public Company findById(long id) {
         EntityManager em = null;
@@ -72,6 +83,9 @@ public class CompanyDaoImpl implements CompanyDao {
         return company;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     public void create(Company company) {
         EntityManager em = null;
 

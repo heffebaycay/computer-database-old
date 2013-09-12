@@ -16,16 +16,25 @@ public class ComputerServiceImpl implements ComputerService {
         computerDao = DaoManager.INSTANCE.getComputerDao();
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public List<Computer> searchByName(String name) {
         return computerDao.searchByName(name);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public List<Computer> getComputers() {
         return computerDao.getComputers();
     }
-    
+
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void create(Computer computer){
         computerDao.create(computer);
