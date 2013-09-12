@@ -1,6 +1,7 @@
 package fr.epf.computer.service;
 
 import fr.epf.computer.domain.Computer;
+import fr.epf.computer.wrapper.ComputerSearchWrapper;
 
 import java.util.List;
 
@@ -13,19 +14,15 @@ public interface ComputerService {
     List<Computer> getComputers();
 
     /**
-     * @see fr.epf.computer.dao.ComputerDao#searchByName(String)
+     * @see fr.epf.computer.dao.ComputerDao#searchByName(String, int, int)
      */
-    List<Computer> searchByName(String name, int offset, int nbRequested);
+    ComputerSearchWrapper searchByName(String name, int offset, int nbRequested);
 
     /**
      * @see fr.epf.computer.dao.ComputerDao#create(fr.epf.computer.domain.Computer)
      */
     void create(Computer computer);
 
-    List<Computer> getComputers(int offset, int nbRequested);
-
-    long getTotalComputerCount();
-
-    long getTotalComputerCountForSearch(String name);
+    ComputerSearchWrapper getComputers(int offset, int nbRequested);
     
 }

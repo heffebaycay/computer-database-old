@@ -3,6 +3,7 @@ package fr.epf.computer.controller;
 import fr.epf.computer.domain.Computer;
 import fr.epf.computer.service.ComputerService;
 import fr.epf.computer.service.manager.ServiceManager;
+import fr.epf.computer.wrapper.ComputerSearchWrapper;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -33,6 +34,7 @@ public class ComputerController extends HttpServlet {
             return;
 
         List<Computer> computers = null;
+        ComputerSearchWrapper searchWrapper = null;
 
         int nbComputerPerPage = 25;
 
@@ -52,8 +54,9 @@ public class ComputerController extends HttpServlet {
         String searchQuery = request.getParameter("search");
         if( searchQuery != null && !searchQuery.isEmpty()) {
             // User queried specific computers
-            computers = computerService.searchByName(searchQuery, (iPage - 1) * nbComputerPerPage, nbComputerPerPage);
-            long totalComputerCount = computerService.getTotalComputerCountForSearch( searchQuery );
+            searchWrapper = computerService.searchByName(searchQuery, (iPage - 1) * nbComputerPerPage, nbComputerPerPage);
+            computers = searchWrapper.getComputers();
+            long totalComputerCount = searchWrapper.getTotalQueryCount();
 
             long totalPage = (long) Math.ceil( totalComputerCount * 1.0 / nbComputerPerPage);
             request.setAttribute("totalPage", totalPage);
@@ -61,8 +64,9 @@ public class ComputerController extends HttpServlet {
 
         } else {
             // Display all computers
-            computers = computerService.getComputers( (iPage - 1) * nbComputerPerPage, nbComputerPerPage );
-            long totalComputerCount = computerService.getTotalComputerCount();
+            searchWrapper = computerService.getComputers( (iPage - 1) * nbComputerPerPage, nbComputerPerPage );
+            computers = searchWrapper.getComputers();
+            long totalComputerCount = searchWrapper.getTotalQueryCount();
             long totalPage = (long) Math.ceil( totalComputerCount * 1.0 / nbComputerPerPage );
             request.setAttribute("totalPage", totalPage);
         }

@@ -4,17 +4,17 @@ package fr.epf.computer.dao.impl;
 import fr.epf.computer.dao.ComputerDao;
 import fr.epf.computer.dao.manager.DaoManager;
 import fr.epf.computer.domain.Computer;
+import fr.epf.computer.wrapper.ComputerSearchWrapper;
 
 import javax.persistence.EntityManager;
 import java.util.List;
 
 public class ComputerDaoImpl implements ComputerDao {
 
-    private long totalComputerCount;
-
     @Override
-    public List<Computer> getComputers(int offset, int nbRequested) {
+    public ComputerSearchWrapper getComputers(int offset, int nbRequested) {
 
+        ComputerSearchWrapper searchWrapper;
         List<Computer> computers;
         EntityManager em = null;
 
@@ -27,32 +27,32 @@ public class ComputerDaoImpl implements ComputerDao {
             .getResultList()
             ;
 
-            this.totalComputerCount = (Long) em.createQuery("SELECT COUNT (c) FROM Computer c").getSingleResult();
+            long totalComputerCount = (Long) em.createQuery("SELECT COUNT (c) FROM Computer c").getSingleResult();
+
+            searchWrapper = new ComputerSearchWrapper.Builder()
+                                .computers(computers)
+                                .totalQueryCount(totalComputerCount)
+                                .build();
 
         } finally {
             if( em != null )
                 em.close();
         }
 
-        return computers;
-    }
-
-    @Override
-    public long getTotalComputerCount() {
-        // todo: Handle case where totalComputerCout hasn't been set
-        return totalComputerCount;
+        return searchWrapper;
     }
 
     public ComputerDaoImpl() {
-        totalComputerCount = -1;
     }
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public List<Computer> searchByName(String name, int offset, int nbRequested) {
+    public ComputerSearchWrapper searchByName(String name, int offset, int nbRequested) {
         List<Computer> computers = null;
+        long computerCount = -1;
+        ComputerSearchWrapper searchWrapper = null;
 
         EntityManager em = null;
         try {
@@ -65,12 +65,23 @@ public class ComputerDaoImpl implements ComputerDao {
              .setMaxResults(nbRequested)
             .getResultList();
 
+            computerCount = (Long) em.createQuery(
+                    "SELECT COUNT(c) FROM Computer c WHERE c.name LIKE :compName"
+            ).setParameter("compName", "%" + name + "%")
+                    .getSingleResult();
+
+            searchWrapper = new ComputerSearchWrapper.Builder()
+                            .computers(computers)
+                            .totalQueryCount(computerCount)
+                            .build();
+
+
         } finally {
             if( em != null)
                 em.close();
         }
 
-        return computers;
+        return searchWrapper;
     }
 
     /**
@@ -112,24 +123,5 @@ public class ComputerDaoImpl implements ComputerDao {
             if( em != null)
                 em.close();
         }
-    }
-
-    public long getTotalComputerCountForSearch(String name) {
-        EntityManager em = null;
-        long computerCount = -1;
-
-        try {
-            em = DaoManager.INSTANCE.getEntityManager();
-
-            computerCount = (Long) em.createQuery(
-                    "SELECT COUNT(c) FROM Computer c WHERE c.name LIKE :compName"
-            ).setParameter("compName", "%" + name + "%")
-             .getSingleResult();
-        } finally {
-            if( em != null)
-                em.close();
-        }
-
-        return computerCount;
     }
 }
