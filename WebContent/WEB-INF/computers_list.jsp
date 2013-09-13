@@ -41,7 +41,7 @@
                             <td>&nbsp;</td>
                         </c:otherwise>
                     </c:choose>
-                    <td><a href="<c:url value="/computer/edit?id=${computer.id}"/>"><span class="glyphicon glyphicon-edit"></span></a> / <a href="<c:url value="/computer/remove?id=${computer.id}"/>"><span class="glyphicon glyphicon-remove"></span></a></td>
+                    <td><a href="<c:url value="/computer/edit?id=${computer.id}"/>"><span class="glyphicon glyphicon-edit"></span></a> / <a onclick="showDeleteModal(${computer.id}, '${computer.name}' , '<c:if test="${computer.company != null}">${computer.company.name}</c:if>')"><span class="glyphicon glyphicon-remove"></span></a></td>
                 </tr>
             </c:forEach>
             </tbody>
@@ -102,6 +102,49 @@
             </div>
         </div>
     </c:if>
+
+    <script type="text/javascript">
+        function showDeleteModal( computerId, computerName, companyName) {
+            $('#removeComputerInput').val( computerId );
+            $('#modalComputerName').text(computerName);
+            $('#modalComputerCompany').text(companyName);
+            $('#deleteModal').modal();
+        }
+
+        function deleteComputer() {
+            $('#deleteModal').modal('hide');
+            var computerId = $('#removeComputerInput').val();
+            $.post(
+                    "<c:url value="/computer/remove"/>",
+                    {id: computerId},
+                    function(data) {
+                        location.reload();
+                    }
+            );
+        }
+    </script>
+
+    <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title">Are you sure you want to remove this computer?</h4>
+                </div>
+                <div class="modal-body">
+                    Computer name: <span id="modalComputerName"></span><br/>
+                    Company: <span id="modalComputerCompany"></span>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary" onClick="deleteComputer();">Delete</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <form method="post" role="form" id="removeComputerForm">
+        <input type="hidden" name="computerId" id="removeComputerInput" value="-1">
+    </form>
 
 </div> <!-- /container -->
 
