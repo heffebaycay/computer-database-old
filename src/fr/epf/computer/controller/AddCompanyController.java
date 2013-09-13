@@ -32,7 +32,7 @@ public class AddCompanyController extends HttpServlet {
                     .build()
             );
 
-            response.sendRedirect("/company/list");
+            response.sendRedirect(request.getContextPath() + "/company/list");
 
         } else {
             // Error: company name is null/empty

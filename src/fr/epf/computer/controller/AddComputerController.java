@@ -120,7 +120,7 @@ public class AddComputerController extends HttpServlet {
                     .build());
 
             // All done, let's go back to the list
-            response.sendRedirect("/computer/list");
+            response.sendRedirect(request.getContextPath() + "/computer/list");
         }
         else {
             // Tough luck, user didn't fill the form with valid input
