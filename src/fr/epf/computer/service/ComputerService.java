@@ -34,5 +34,10 @@ public interface ComputerService {
      * @see fr.epf.computer.dao.ComputerDao#update(fr.epf.computer.domain.Computer)
      */
     void update(Computer computer);
+
+    /**
+     * @see fr.epf.computer.dao.ComputerDao#remove(long)
+     */
+    void remove(long id);
     
 }

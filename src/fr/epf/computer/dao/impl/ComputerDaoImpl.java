@@ -12,6 +12,28 @@ import java.util.List;
 
 public class ComputerDaoImpl implements ComputerDao {
 
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void remove(long id) {
+        EntityManager em = null;
+
+        try {
+            em = DaoManager.INSTANCE.getEntityManager();
+
+            Computer computer = em.find(Computer.class, id);
+            if(computer != null) {
+                em.getTransaction().begin();
+                em.remove(computer);
+                em.getTransaction().commit();
+            }
+        } finally {
+            if(em != null)
+                em.close();
+        }
+    }
+
     @Override
     public SearchWrapper<Computer> getComputers(int offset, int nbRequested) {
 
