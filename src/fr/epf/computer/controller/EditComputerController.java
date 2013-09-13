@@ -114,7 +114,7 @@ public class EditComputerController extends HttpServlet {
         } catch ( NumberFormatException e) {
             // Id parameter provided isn't of type "long", so we won't be able to do anything useful with it
             // Might as well redirect the user to the Computer add page
-            response.sendRedirect("/computer/add");
+            response.sendRedirect(request.getContextPath() + "/computer/add");
             return;
         }
 
@@ -127,7 +127,7 @@ public class EditComputerController extends HttpServlet {
             if( computer == null) {
                 // Unable to find any computer based on the given id
                 // Redirecting the user to the "Add" page.
-                response.sendRedirect("/computer/add");
+                response.sendRedirect(request.getContextPath() + "/computer/add");
                 return;
             }
             computer.setName(name);
@@ -170,7 +170,7 @@ public class EditComputerController extends HttpServlet {
         } catch ( NumberFormatException e) {
             // Id parameter provided isn't of type "long", so we won't be able to do anything useful with it
             // Might as well redirect the user to the Computer add page
-            response.sendRedirect("/computer/add");
+            response.sendRedirect(request.getContextPath() + "/computer/add");
             return;
         }
 
@@ -179,7 +179,7 @@ public class EditComputerController extends HttpServlet {
         if( computer == null) {
             // Unable to find any computer based on the given id
             // Redirecting the user to the "Add" page.
-            response.sendRedirect("/computer/add");
+            response.sendRedirect(request.getContextPath() + "/computer/add");
             return;
         }
 

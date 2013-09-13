@@ -7,6 +7,7 @@ import fr.epf.computer.domain.Company;
 import fr.epf.computer.wrapper.SearchWrapper;
 
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
 import java.util.List;
 
 public class CompanyDaoImpl implements CompanyDao {
@@ -58,6 +59,9 @@ public class CompanyDaoImpl implements CompanyDao {
                                 .setTotalQueryCount(totalCompaniesCount)
                     ;
 
+        } catch ( NoResultException e) {
+            // totalCompaniesCount query failed
+            searchWrapper = null;
         } finally {
             if( em != null )
                 em.close();
@@ -97,7 +101,11 @@ public class CompanyDaoImpl implements CompanyDao {
             ;
 
 
-        } finally {
+        } catch (NoResultException e) {
+            // companyCount query failed
+            searchWrapper = null;
+        }
+        finally {
             if( em != null)
                 em.close();
         }
@@ -123,6 +131,9 @@ public class CompanyDaoImpl implements CompanyDao {
             .getSingleResult();
             ;
 
+        } catch(NoResultException e) {
+            // Query didn't return any Company
+            company = null;
         } finally {
             if (em != null)
                 em.close();
