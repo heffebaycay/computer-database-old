@@ -55,4 +55,10 @@ public interface ComputerDao {
      * @return The matching computer
      */
     Computer findById(long id);
+
+    /**
+     * This method removes a computer from the datasource based on its Id
+     * @param id Id of the computer object to be removed
+     */
+    void remove(long id);
 }
