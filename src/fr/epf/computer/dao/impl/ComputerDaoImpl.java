@@ -7,9 +7,32 @@ import fr.epf.computer.domain.Computer;
 import fr.epf.computer.wrapper.SearchWrapper;
 
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
 import java.util.List;
 
 public class ComputerDaoImpl implements ComputerDao {
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void remove(long id) {
+        EntityManager em = null;
+
+        try {
+            em = DaoManager.INSTANCE.getEntityManager();
+
+            Computer computer = em.find(Computer.class, id);
+            if(computer != null) {
+                em.getTransaction().begin();
+                em.remove(computer);
+                em.getTransaction().commit();
+            }
+        } finally {
+            if(em != null)
+                em.close();
+        }
+    }
 
     @Override
     public SearchWrapper<Computer> getComputers(int offset, int nbRequested) {
@@ -33,6 +56,9 @@ public class ComputerDaoImpl implements ComputerDao {
                                 .setResults(computers)
                                 .setTotalQueryCount(totalComputerCount);
 
+        } catch (NoResultException e) {
+            // totalComputerCount query failed
+            searchWrapper = null;
         } finally {
             if( em != null )
                 em.close();
@@ -73,6 +99,9 @@ public class ComputerDaoImpl implements ComputerDao {
                                 .setResults(computers)
                                 .setTotalQueryCount(computerCount);
 
+        } catch (NoResultException e) {
+            // computerCount query failed
+            searchWrapper = null;
         } finally {
             if( em != null)
                 em.close();
@@ -108,7 +137,7 @@ public class ComputerDaoImpl implements ComputerDao {
     @Override
     public Computer findById(long id) {
         EntityManager em = null;
-        Computer computer = null;
+        Computer computer;
 
         try {
             em = DaoManager.INSTANCE.getEntityManager();
@@ -117,6 +146,10 @@ public class ComputerDaoImpl implements ComputerDao {
                     "SELECT c FROM Computer c WHERE c.id = :computerId"
             ).setParameter("computerId", id)
              .getSingleResult();
+
+        } catch (NoResultException e) {
+            // No result found in the DataSource
+            computer = null;
 
         } finally {
             if( em != null )

@@ -41,14 +41,14 @@ public class EditCompanyController extends HttpServlet{
 			test = Long.parseLong(strCompanyId);
 		}catch(NumberFormatException e){
 			System.out.println(e.getMessage()); // Show exception message
-			response.sendRedirect("/company/add");
+			response.sendRedirect(request.getContextPath() + "/company/add");
 			return;
 		}
 		
 		if(bEverythingOkay) {
 			Company foundCompany = companyService.findById(test);
 			if(foundCompany == null){
-				response.sendRedirect("/company/add");
+				response.sendRedirect(request.getContextPath() + "/company/add");
 				return;
 			}
 			
@@ -81,12 +81,12 @@ public class EditCompanyController extends HttpServlet{
 			test = Long.parseLong(strCompanyId);
 		}catch(NumberFormatException e){
 			System.out.println(e.getMessage()); // Show exception message
-			response.sendRedirect("/company/add");
+			response.sendRedirect(request.getContextPath() + "/company/add");
 			return;
 		}
 		Company foundCompany = companyService.findById(test);
 		if(foundCompany == null){
-			response.sendRedirect("/company/add");
+			response.sendRedirect(request.getContextPath() + "/company/add");
 			return;
 		}
 	
