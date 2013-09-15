@@ -4,6 +4,8 @@ package fr.epf.computer.dao.impl;
 import fr.epf.computer.dao.ComputerDao;
 import fr.epf.computer.dao.manager.DaoManager;
 import fr.epf.computer.domain.Computer;
+import fr.epf.computer.utils.ComputerSortCriterion;
+import fr.epf.computer.utils.SortOrder;
 import fr.epf.computer.wrapper.SearchWrapper;
 
 import javax.persistence.EntityManager;
@@ -35,7 +37,7 @@ public class ComputerDaoImpl implements ComputerDao {
     }
 
     @Override
-    public SearchWrapper<Computer> getComputers(int offset, int nbRequested) {
+    public SearchWrapper<Computer> getComputers(int offset, int nbRequested, ComputerSortCriterion sortCriterion, SortOrder sortOrder) {
 
         SearchWrapper<Computer> searchWrapper = null;
         List<Computer> computers;
@@ -44,7 +46,7 @@ public class ComputerDaoImpl implements ComputerDao {
         try {
             em = DaoManager.INSTANCE.getEntityManager();
             computers = em.createQuery(
-                    "SELECT c FROM Computer c"
+                    "SELECT c FROM Computer c order by " + generateOrderPart("c", sortCriterion, sortOrder)
             ).setFirstResult(offset)
             .setMaxResults(nbRequested)
             .getResultList()
@@ -67,6 +69,38 @@ public class ComputerDaoImpl implements ComputerDao {
         return searchWrapper;
     }
 
+    public String generateOrderPart(String entityAlias ,ComputerSortCriterion sortCriterion, SortOrder sortOrder) {
+        String res = entityAlias;
+
+        switch (sortCriterion) {
+            case ID:
+                res += ".id";
+                break;
+            case NAME:
+                res += ".name";
+                break;
+            case DATE_DISCONTINUED:
+                res += ".discontinued";
+                break;
+            case DATE_INTRODUCED:
+                res += ".introduced";
+                break;
+            case COMPANY_NAME:
+                res += ".company.name";
+                break;
+            default:
+                res += ".id";
+        }
+
+        if(sortOrder.equals( SortOrder.DESC )) {
+            res += " desc";
+        } else {
+            res += " asc";
+        }
+
+        return res;
+    }
+
     public ComputerDaoImpl() {
     }
 
@@ -74,7 +108,7 @@ public class ComputerDaoImpl implements ComputerDao {
      * {@inheritDoc}
      */
     @Override
-    public SearchWrapper<Computer> searchByName(String name, int offset, int nbRequested) {
+    public SearchWrapper<Computer> searchByName(String name, int offset, int nbRequested, ComputerSortCriterion sortCriterion, SortOrder sortOrder) {
         List<Computer> computers = null;
         long computerCount = -1;
         SearchWrapper<Computer> searchWrapper = null;
@@ -84,7 +118,7 @@ public class ComputerDaoImpl implements ComputerDao {
             em = DaoManager.INSTANCE.getEntityManager();
 
             computers = em.createQuery(
-                    "SELECT  c FROM Computer c WHERE c.name LIKE :compName"
+                    "SELECT  c FROM Computer c WHERE c.name LIKE :compName order by " + generateOrderPart("c", sortCriterion, sortOrder)
             ).setParameter("compName", "%" + name + "%")
              .setFirstResult(offset)
              .setMaxResults(nbRequested)

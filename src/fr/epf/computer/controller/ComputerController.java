@@ -3,6 +3,8 @@ package fr.epf.computer.controller;
 import fr.epf.computer.domain.Computer;
 import fr.epf.computer.service.ComputerService;
 import fr.epf.computer.service.manager.ServiceManager;
+import fr.epf.computer.utils.ComputerSortCriterion;
+import fr.epf.computer.utils.SortOrder;
 import fr.epf.computer.wrapper.SearchWrapper;
 
 import javax.servlet.RequestDispatcher;
@@ -33,6 +35,42 @@ public class ComputerController extends HttpServlet {
         if( computerService == null)
             return;
 
+
+        // Sorting arguments
+        String gSortBy = request.getParameter("sortBy");
+        String gSortOrder = request.getParameter("order");
+        SortOrder sortOrder;
+        ComputerSortCriterion sortCriterion;
+
+        // Setting up sort order
+        if(gSortOrder != null && gSortOrder.equals("desc")) {
+            sortOrder = SortOrder.DESC;
+        } else {
+            sortOrder = SortOrder.ASC;
+        }
+
+        // Setting up sort criterion
+        if( gSortBy != null && !gSortBy.trim().isEmpty()) {
+            if( gSortBy.equals("id") ) {
+                sortCriterion = ComputerSortCriterion.ID;
+            } else if( gSortBy.equals("name") ) {
+                sortCriterion = ComputerSortCriterion.NAME;
+            } else if (gSortBy.equals("dateIntroduced")) {
+                sortCriterion = ComputerSortCriterion.DATE_INTRODUCED;
+            } else if (gSortBy.equals("dateDiscontinued")) {
+                sortCriterion = ComputerSortCriterion.DATE_DISCONTINUED;
+            } else if (gSortBy.equals("company")) {
+                sortCriterion = ComputerSortCriterion.COMPANY_NAME;
+            } else {
+                // Default criterion
+                sortCriterion = ComputerSortCriterion.ID;
+            }
+        } else {
+            // Setting to default criterion
+            sortCriterion = ComputerSortCriterion.ID;
+        }
+
+
         List<Computer> computers = null;
         SearchWrapper<Computer> searchWrapper;
 
@@ -54,7 +92,7 @@ public class ComputerController extends HttpServlet {
         String searchQuery = request.getParameter("search");
         if( searchQuery != null && !searchQuery.isEmpty()) {
             // User queried specific computers
-            searchWrapper = computerService.searchByName(searchQuery, (iPage - 1) * nbComputerPerPage, nbComputerPerPage);
+            searchWrapper = computerService.searchByName(searchQuery, (iPage - 1) * nbComputerPerPage, nbComputerPerPage, sortCriterion, sortOrder);
             computers = searchWrapper.getResults();
             long totalComputerCount = searchWrapper.getTotalQueryCount();
 
@@ -65,7 +103,7 @@ public class ComputerController extends HttpServlet {
 
         } else {
             // Display all computers
-            searchWrapper = computerService.getComputers( (iPage - 1) * nbComputerPerPage, nbComputerPerPage );
+            searchWrapper = computerService.getComputers( (iPage - 1) * nbComputerPerPage, nbComputerPerPage, sortCriterion, sortOrder );
             computers = searchWrapper.getResults();
             long totalComputerCount = searchWrapper.getTotalQueryCount();
             long totalPage = (long) Math.ceil( totalComputerCount * 1.0 / nbComputerPerPage );
