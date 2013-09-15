@@ -3,6 +3,8 @@ package fr.epf.computer.controller;
 import fr.epf.computer.domain.Computer;
 import fr.epf.computer.service.ComputerService;
 import fr.epf.computer.service.manager.ServiceManager;
+import fr.epf.computer.utils.ComputerSortCriteria;
+import fr.epf.computer.utils.SortOrder;
 import fr.epf.computer.wrapper.SearchWrapper;
 
 import javax.servlet.RequestDispatcher;
@@ -33,6 +35,51 @@ public class ComputerController extends HttpServlet {
         if( computerService == null)
             return;
 
+
+        // Sorting arguments
+        String gSortBy = request.getParameter("sortBy");
+        String gSortOrder = request.getParameter("order");
+        SortOrder sortOrder;
+        ComputerSortCriteria sortCriterion;
+
+        // Setting up sort order
+        if(gSortOrder != null && gSortOrder.equals("desc")) {
+            sortOrder = SortOrder.DESC;
+            request.setAttribute("sortOrder", gSortOrder);
+        } else {
+            sortOrder = SortOrder.ASC;
+            request.setAttribute("sortOrder", "asc");
+        }
+
+        // Setting up sort criterion
+        if( gSortBy != null && !gSortBy.trim().isEmpty()) {
+            if( gSortBy.equals("id") ) {
+                sortCriterion = ComputerSortCriteria.ID;
+                request.setAttribute("sortCriterion", gSortBy);
+            } else if( gSortBy.equals("name") ) {
+                sortCriterion = ComputerSortCriteria.NAME;
+                request.setAttribute("sortCriterion", gSortBy);
+            } else if (gSortBy.equals("dateIntroduced")) {
+                sortCriterion = ComputerSortCriteria.DATE_INTRODUCED;
+                request.setAttribute("sortCriterion", gSortBy);
+            } else if (gSortBy.equals("dateDiscontinued")) {
+                sortCriterion = ComputerSortCriteria.DATE_DISCONTINUED;
+                request.setAttribute("sortCriterion", gSortBy);
+            } else if (gSortBy.equals("company")) {
+                sortCriterion = ComputerSortCriteria.COMPANY_NAME;
+                request.setAttribute("sortCriterion", gSortBy);
+            } else {
+                // Default criterion
+                sortCriterion = ComputerSortCriteria.ID;
+                request.setAttribute("sortCriterion", "id");
+            }
+        } else {
+            // Setting to default criterion
+            sortCriterion = ComputerSortCriteria.ID;
+            request.setAttribute("sortCriterion", "id");
+        }
+
+
         List<Computer> computers = null;
         SearchWrapper<Computer> searchWrapper;
 
@@ -54,7 +101,7 @@ public class ComputerController extends HttpServlet {
         String searchQuery = request.getParameter("search");
         if( searchQuery != null && !searchQuery.isEmpty()) {
             // User queried specific computers
-            searchWrapper = computerService.searchByName(searchQuery, (iPage - 1) * nbComputerPerPage, nbComputerPerPage);
+            searchWrapper = computerService.searchByName(searchQuery, (iPage - 1) * nbComputerPerPage, nbComputerPerPage, sortCriterion, sortOrder);
             computers = searchWrapper.getResults();
             long totalComputerCount = searchWrapper.getTotalQueryCount();
 
@@ -65,7 +112,7 @@ public class ComputerController extends HttpServlet {
 
         } else {
             // Display all computers
-            searchWrapper = computerService.getComputers( (iPage - 1) * nbComputerPerPage, nbComputerPerPage );
+            searchWrapper = computerService.getComputers( (iPage - 1) * nbComputerPerPage, nbComputerPerPage, sortCriterion, sortOrder );
             computers = searchWrapper.getResults();
             long totalComputerCount = searchWrapper.getTotalQueryCount();
             long totalPage = (long) Math.ceil( totalComputerCount * 1.0 / nbComputerPerPage );

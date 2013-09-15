@@ -1,6 +1,8 @@
 package fr.epf.computer.service;
 
 import fr.epf.computer.domain.Company;
+import fr.epf.computer.utils.CompanySortCriteria;
+import fr.epf.computer.utils.SortOrder;
 import fr.epf.computer.wrapper.SearchWrapper;
 
 import java.util.List;
@@ -15,9 +17,9 @@ public interface CompanyService {
 
     /**
      *
-     * @see fr.epf.computer.dao.CompanyDao#searchByName(String, int, int)
+     * @see fr.epf.computer.dao.CompanyDao#searchByName(String, int, int, fr.epf.computer.utils.CompanySortCriteria, fr.epf.computer.utils.SortOrder)
      */
-    SearchWrapper<Company> searchByName(String name, int offset, int nbRequested);
+    SearchWrapper<Company> searchByName(String name, int offset, int nbRequested, CompanySortCriteria sortCriterion, SortOrder sortOrder);
 
     /**
      * @see fr.epf.computer.dao.CompanyDao#create(fr.epf.computer.domain.Company)
@@ -29,7 +31,10 @@ public interface CompanyService {
      */
     Company findById(long id);
 
-    SearchWrapper<Company> getCompanies(int offset, int nbRequested);
+    /**
+     * @see fr.epf.computer.dao.CompanyDao#getCompanies(int, int, fr.epf.computer.utils.CompanySortCriteria, fr.epf.computer.utils.SortOrder)
+     */
+    SearchWrapper<Company> getCompanies(int offset, int nbRequested, CompanySortCriteria sortCriterion, SortOrder sortOrder);
     
     void update(Company company);
 }
