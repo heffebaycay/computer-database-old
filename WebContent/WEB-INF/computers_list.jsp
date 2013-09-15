@@ -20,10 +20,10 @@
         <table class="table table-bordered table-striped computers">
             <thead>
             <tr>
-                <th>Computer name</th>
-                <th>Date introduced</th>
-                <th>Date discontinued</th>
-                <th>Company</th>
+                <th>Computer name <a href="<c:url value="/computer/list?${epf:generateGetParams(currentPage, searchQuery, \"name\", \"asc\")}"/>"><span class="glyphicon glyphicon-arrow-up"></span></a> / <a href="<c:url value="/computer/list?${epf:generateGetParams(currentPage, searchQuery, \"name\", \"desc\")}"/>"><span class="glyphicon glyphicon-arrow-down"></span></a></th>
+                <th>Date introduced <a href="<c:url value="/computer/list?${epf:generateGetParams(currentPage, searchQuery, \"dateIntroduced\", \"asc\")}"/>"><span class="glyphicon glyphicon-arrow-up"></span></a> / <a href="<c:url value="/computer/list?${epf:generateGetParams(currentPage, searchQuery, \"dateIntroduced\", \"desc\")}"/>"><span class="glyphicon glyphicon-arrow-down"></span></a></th>
+                <th>Date discontinued <a href="<c:url value="/computer/list?${epf:generateGetParams(currentPage, searchQuery, \"dateDiscontinued\", \"asc\")}"/>"><span class="glyphicon glyphicon-arrow-up"></span></a> / <a href="<c:url value="/computer/list?${epf:generateGetParams(currentPage, searchQuery, \"dateDiscontinued\", \"desc\")}"/>"><span class="glyphicon glyphicon-arrow-down"></span></a></th>
+                <th>Company <a href="<c:url value="/computer/list?${epf:generateGetParams(currentPage, searchQuery, \"company\", \"asc\")}"/>"><span class="glyphicon glyphicon-arrow-up"></span></a> / <a href="<c:url value="/computer/list?${epf:generateGetParams(currentPage, searchQuery, \"company\", \"desc\")}"/>"><span class="glyphicon glyphicon-arrow-down"></span></a></th>
                 <th>Actions</th>
             </tr>
             </thead>

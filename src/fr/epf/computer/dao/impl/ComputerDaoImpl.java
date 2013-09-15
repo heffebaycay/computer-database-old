@@ -45,14 +45,17 @@ public class ComputerDaoImpl implements ComputerDao {
 
         try {
             em = DaoManager.INSTANCE.getEntityManager();
+
+            String orderPart = generateOrderPart("c", sortCriterion, sortOrder);
+
             computers = em.createQuery(
-                    "SELECT c FROM Computer c order by " + generateOrderPart("c", sortCriterion, sortOrder)
+                    "SELECT c FROM Computer c order by " + orderPart
             ).setFirstResult(offset)
             .setMaxResults(nbRequested)
             .getResultList()
             ;
 
-            long totalComputerCount = (Long) em.createQuery("SELECT COUNT (c) FROM Computer c").getSingleResult();
+            long totalComputerCount = (Long) em.createQuery("SELECT COUNT (c) FROM Computer c order by " + orderPart).getSingleResult();
 
             searchWrapper = new SearchWrapper<Computer>()
                                 .setResults(computers)
@@ -116,16 +119,17 @@ public class ComputerDaoImpl implements ComputerDao {
         EntityManager em = null;
         try {
             em = DaoManager.INSTANCE.getEntityManager();
+            String orderPart = generateOrderPart("c", sortCriterion, sortOrder);
 
             computers = em.createQuery(
-                    "SELECT  c FROM Computer c WHERE c.name LIKE :compName order by " + generateOrderPart("c", sortCriterion, sortOrder)
+                    "SELECT  c FROM Computer c WHERE c.name LIKE :compName order by " + orderPart
             ).setParameter("compName", "%" + name + "%")
              .setFirstResult(offset)
              .setMaxResults(nbRequested)
             .getResultList();
 
             computerCount = (Long) em.createQuery(
-                    "SELECT COUNT(c) FROM Computer c WHERE c.name LIKE :compName"
+                    "SELECT COUNT(c) FROM Computer c WHERE c.name LIKE :compName order by " + orderPart
             ).setParameter("compName", "%" + name + "%")
                     .getSingleResult();
 
