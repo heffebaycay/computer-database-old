@@ -4,6 +4,8 @@ package fr.epf.computer.dao.impl;
 import fr.epf.computer.dao.CompanyDao;
 import fr.epf.computer.dao.manager.DaoManager;
 import fr.epf.computer.domain.Company;
+import fr.epf.computer.utils.CompanySortCriteria;
+import fr.epf.computer.utils.SortOrder;
 import fr.epf.computer.wrapper.SearchWrapper;
 
 import javax.persistence.EntityManager;
@@ -37,22 +39,28 @@ public class CompanyDaoImpl implements CompanyDao {
         return companies;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
-    public SearchWrapper<Company> getCompanies(int offset, int nbRequested) {
+    public SearchWrapper<Company> getCompanies(int offset, int nbRequested, CompanySortCriteria sortCriterion, SortOrder sortOrder) {
         SearchWrapper<Company> searchWrapper = null;
         List<Company> companies = null;
         EntityManager em = null;
 
         try {
             em = DaoManager.INSTANCE.getEntityManager();
+
+            String orderPart = generateOrderPart("c", sortCriterion, sortOrder);
+
             companies = em.createQuery(
-                    "SELECT c FROM Company c"
+                    "SELECT c FROM Company c order by " + orderPart
             ).setFirstResult(offset)
              .setMaxResults(nbRequested)
              .getResultList()
             ;
 
-            long totalCompaniesCount = (Long) em.createQuery("SELECT COUNT(C) FROM Company c").getSingleResult();
+            long totalCompaniesCount = (Long) em.createQuery("SELECT COUNT(C) FROM Company c order by " + orderPart).getSingleResult();
 
             searchWrapper = new SearchWrapper<Company>()
                                 .setResults(companies)
@@ -71,9 +79,45 @@ public class CompanyDaoImpl implements CompanyDao {
     }
 
     /**
+     * Generates the part of the JPQL that control sorting results
+     *
+     * Basically:
+     *              SELECT c FROM Company c <strong>order by c.name desc</strong>
+     *
+     *
+     * @param entityAlias     The alias of the entity. In the example above, the alias is "c"
+     * @param sortCriterion   The criterion that should be used to sort results (hint: it's one of the attributes of
+     *                        the Company entity)
+     * @param sortOrder       The order in which the results should be sorted (asc / desc)
+     * @return                A String containing the "order by" component of the query
+     */
+    private String generateOrderPart(String entityAlias, CompanySortCriteria sortCriterion, SortOrder sortOrder) {
+        String res = entityAlias;
+
+        switch (sortCriterion) {
+            case ID:
+                res += ".id";
+                break;
+            case NAME:
+                res += ".name";
+                break;
+            default:
+                res += ".id";
+        }
+
+        if(sortOrder.equals( SortOrder.DESC )) {
+            res += " desc";
+        } else {
+            res += " asc";
+        }
+
+        return res;
+    }
+
+    /**
      * {@inheritDoc}
      */
-    public SearchWrapper<Company> searchByName(String name, int offset, int nbRequested) {
+    public SearchWrapper<Company> searchByName(String name, int offset, int nbRequested, CompanySortCriteria sortCriterion, SortOrder sortOrder) {
         SearchWrapper<Company> searchWrapper = null;
         long companyCount = -1;
         List<Company> companies = null;
@@ -81,8 +125,11 @@ public class CompanyDaoImpl implements CompanyDao {
 
         try {
             em = DaoManager.INSTANCE.getEntityManager();
+
+            String orderPart = generateOrderPart("c", sortCriterion, sortOrder);
+
             companies = em.createQuery(
-                    "SELECT c FROM Company c WHERE c.name LIKE :compName"
+                    "SELECT c FROM Company c WHERE c.name LIKE :compName order by " + orderPart
             ).setParameter("compName", "%" + name + "%")
              .setFirstResult(offset)
              .setMaxResults(nbRequested)
@@ -90,7 +137,7 @@ public class CompanyDaoImpl implements CompanyDao {
             ;
 
             companyCount = (Long) em.createQuery(
-                    "SELECT COUNT(c) FROM Company c WHERE c.name LIKE :compName"
+                    "SELECT COUNT(c) FROM Company c WHERE c.name LIKE :compName order by " + orderPart
             ).setParameter("compName", "%" + name + "%" )
             .getSingleResult()
             ;
@@ -161,7 +208,10 @@ public class CompanyDaoImpl implements CompanyDao {
                 em.close();
         }
     }
-    
+
+    /**
+     * {@inheritDoc}
+     */
     public void update(Company company){
     	EntityManager em = null;
 
