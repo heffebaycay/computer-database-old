@@ -45,29 +45,38 @@ public class ComputerController extends HttpServlet {
         // Setting up sort order
         if(gSortOrder != null && gSortOrder.equals("desc")) {
             sortOrder = SortOrder.DESC;
+            request.setAttribute("sortOrder", gSortOrder);
         } else {
             sortOrder = SortOrder.ASC;
+            request.setAttribute("sortOrder", "asc");
         }
 
         // Setting up sort criterion
         if( gSortBy != null && !gSortBy.trim().isEmpty()) {
             if( gSortBy.equals("id") ) {
                 sortCriterion = ComputerSortCriterion.ID;
+                request.setAttribute("sortCriterion", gSortBy);
             } else if( gSortBy.equals("name") ) {
                 sortCriterion = ComputerSortCriterion.NAME;
+                request.setAttribute("sortCriterion", gSortBy);
             } else if (gSortBy.equals("dateIntroduced")) {
                 sortCriterion = ComputerSortCriterion.DATE_INTRODUCED;
+                request.setAttribute("sortCriterion", gSortBy);
             } else if (gSortBy.equals("dateDiscontinued")) {
                 sortCriterion = ComputerSortCriterion.DATE_DISCONTINUED;
+                request.setAttribute("sortCriterion", gSortBy);
             } else if (gSortBy.equals("company")) {
                 sortCriterion = ComputerSortCriterion.COMPANY_NAME;
+                request.setAttribute("sortCriterion", gSortBy);
             } else {
                 // Default criterion
                 sortCriterion = ComputerSortCriterion.ID;
+                request.setAttribute("sortCriterion", "id");
             }
         } else {
             // Setting to default criterion
             sortCriterion = ComputerSortCriterion.ID;
+            request.setAttribute("sortCriterion", "id");
         }
 
 

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<taglib xmlns="http://java.sun.com/xml/ns/j2ee"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee http://java.sun.com/xml/ns/j2ee/web-jsptaglibrary_2_0.xsd"
+        version="2.0">
+    <tlib-version>2.0</tlib-version>
+    <short-name>epf</short-name>
+    <function>
+        <name>generateGetParams</name>
+        <function-class>fr.epf.computer.taglib.EPFFunctions</function-class>
+        <function-signature>java.lang.String generateGetParams(int, java.lang.String, java.lang.String, java.lang.String)</function-signature>
+        <example>
+            ${epf:generateGetParams(1, "search", "dateIntroduced", "asc")}
+        </example>
+    </function>
+
+</taglib>

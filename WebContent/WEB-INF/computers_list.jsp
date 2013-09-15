@@ -1,5 +1,5 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+<%@ taglib prefix="epf" uri="/WEB-INF/epf-params.tld" %>
 <jsp:include page="include/header.jsp" />
 
 <div class="container">
@@ -55,10 +55,10 @@
                     <c:if test="${ currentPage gt 1 }">
                         <c:choose>
                             <c:when test="${ searchQuery != null }" >
-                                <li><a href="<c:url value="/computer/list?search=${searchQuery}&p=${currentPage - 1}"/>">&laquo;</a></li>
+                                <li><a href="<c:url value="/computer/list?${epf:generateGetParams(currentPage - 1, searchQuery, sortCriterion, sortOrder)}"/>"></a></li>
                             </c:when>
                             <c:otherwise>
-                                <li><a href="<c:url value="/computer/list?p=${currentPage - 1}"/>">&laquo;</a></li>
+                                <li><a href="<c:url value="/computer/list?${epf:generateGetParams(currentPage - 1, null, sortCriterion, sortOrder)}"/>">&laquo;</a></li>
                             </c:otherwise>
                         </c:choose>
                     </c:if>
@@ -70,7 +70,7 @@
                                         <li class="active"><a>${i}</a></li>
                                     </c:when>
                                     <c:otherwise>
-                                        <li><a href="<c:url value="/computer/list?search=${searchQuery}&p=${i}"/>">${i}</a></li>
+                                        <li><a href="<c:url value="/computer/list?${epf:generateGetParams(i, searchQuery, sortCriterion, sortOrder)}"/>">${i}</a></li>
                                     </c:otherwise>
                                 </c:choose>
                             </c:forEach>
@@ -82,7 +82,7 @@
                                         <li class="active"><a>${i}</a></li>
                                     </c:when>
                                     <c:otherwise>
-                                        <li><a href="<c:url value="/computer/list?p=${i}"/>">${i}</a></li>
+                                        <li><a href="<c:url value="/computer/list?${epf:generateGetParams(i, null, sortCriterion, sortOrder)}"/>">${i}</a></li>
                                     </c:otherwise>
                                 </c:choose>
                             </c:forEach>
@@ -91,10 +91,10 @@
                     <c:if test="${currentPage lt totalPage}">
                         <c:choose>
                             <c:when test="${ searchQuery != null }" >
-                                <li><a href="<c:url value="/computer/list?search=${searchQuery}&p=${currentPage + 1}"/>">&raquo;</a></li>
+                                <li><a href="<c:url value="/computer/list?${epf:generateGetParams(currentPage + 1, searchQuery, sortCriterion, sortOrder)}"/>">&raquo;</a></li>
                             </c:when>
                             <c:otherwise>
-                                <li><a href="<c:url value="/computer/list?p=${currentPage + 1}"/>">&raquo;</a></li>
+                                <li><a href="<c:url value="/computer/list?p=${epf:generateGetParams(currentPage + 1, null, sortCriterion, sortOrder)}"/>">&raquo;</a></li>
                             </c:otherwise>
                         </c:choose>
                     </c:if>
