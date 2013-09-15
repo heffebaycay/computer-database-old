@@ -2,11 +2,7 @@ package fr.epf.computer.domain;
 
 
 import javax.persistence.*;
-
-
-import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.TimeZone;
 
 @Entity
 @Table( name = "computer")
@@ -57,45 +53,12 @@ public class Computer {
         return introduced;
     }
 
-
-    /**
-     * Returns the Introduced date attribute formatted in a human readable way (yyyy-mm-dd)
-     *
-     * Todo: remove the need for this method
-     *
-     * @return
-     */
-    public String getIntroducedAsString() {
-        // Creating a SDF in order to format the Introduced date the way we want
-        SimpleDateFormat sdf = new SimpleDateFormat("y-MM-dd");
-        sdf.setTimeZone(TimeZone.getTimeZone("Europe/Paris"));
-
-        return sdf.format(getIntroduced());
-    }
-
     public void setIntroduced(Date introduced) {
         this.introduced = introduced;
     }
 
     public Date getDiscontinued() {
         return discontinued;
-    }
-
-
-    /**
-     * Returns the Discontinued date attribute formatted in a human readable way (yyyy-mm-dd)
-     *
-     * Todo: remove the need for this method
-     *
-     * @return
-     */
-    public String getDiscontinuedAsString() {
-        // Creating a SDF in order to format the Discontinued date the way we want
-        SimpleDateFormat sdf = new SimpleDateFormat("y-MM-dd");
-        sdf.setTimeZone(TimeZone.getTimeZone("Europe/Paris"));
-
-        return sdf.format(getDiscontinued());
-
     }
 
     public void setDiscontinued(Date discontinued) {

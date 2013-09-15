@@ -13,5 +13,12 @@
             ${epf:generateGetParams(1, "search", "dateIntroduced", "asc")}
         </example>
     </function>
-
+    <function>
+        <name>formatDate</name>
+        <function-class>fr.epf.computer.taglib.EPFFunctions</function-class>
+        <function-signature>java.lang.String formatDate(java.util.Date,java.lang.String)</function-signature>
+        <example>
+            ${epf:formatDate( computer.introduced, "y-MM-dd" )}
+        </example>
+    </function>
 </taglib>

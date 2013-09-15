@@ -31,8 +31,8 @@
             <c:forEach items="${requestScope.computers}" var="computer">
                 <tr>
                     <td>${computer.name}</td>
-                    <td>${computer.introduced}</td>
-                    <td>${computer.discontinued}</td>
+                    <td>${epf:formatDate(computer.introduced, "y-MM-dd")}</td>
+                    <td>${epf:formatDate(computer.discontinued, "y-MM-dd")}</td>
                     <c:choose>
                         <c:when test="${computer.company != null}">
                             <td>${computer.company.name}</td>

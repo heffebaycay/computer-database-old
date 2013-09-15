@@ -1,5 +1,9 @@
 package fr.epf.computer.taglib;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.TimeZone;
+
 public class EPFFunctions  {
 
     /**
@@ -24,5 +28,15 @@ public class EPFFunctions  {
 
     }
 
+    public static String formatDate(Date date, String format) {
+        String strDate = null;
+
+        SimpleDateFormat sdf = new SimpleDateFormat(format);
+        sdf.setTimeZone(TimeZone.getTimeZone("Europe/Paris"));
+
+        strDate = sdf.format(date);
+
+        return strDate;
+    }
 
 }
