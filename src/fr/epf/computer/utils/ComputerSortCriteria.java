@@ -1,6 +1,6 @@
 package fr.epf.computer.utils;
 
-public enum ComputerSortCriterion {
+public enum ComputerSortCriteria {
 
     ID,
     NAME,

@@ -3,7 +3,7 @@ package fr.epf.computer.controller;
 import fr.epf.computer.domain.Computer;
 import fr.epf.computer.service.ComputerService;
 import fr.epf.computer.service.manager.ServiceManager;
-import fr.epf.computer.utils.ComputerSortCriterion;
+import fr.epf.computer.utils.ComputerSortCriteria;
 import fr.epf.computer.utils.SortOrder;
 import fr.epf.computer.wrapper.SearchWrapper;
 
@@ -40,7 +40,7 @@ public class ComputerController extends HttpServlet {
         String gSortBy = request.getParameter("sortBy");
         String gSortOrder = request.getParameter("order");
         SortOrder sortOrder;
-        ComputerSortCriterion sortCriterion;
+        ComputerSortCriteria sortCriterion;
 
         // Setting up sort order
         if(gSortOrder != null && gSortOrder.equals("desc")) {
@@ -54,28 +54,28 @@ public class ComputerController extends HttpServlet {
         // Setting up sort criterion
         if( gSortBy != null && !gSortBy.trim().isEmpty()) {
             if( gSortBy.equals("id") ) {
-                sortCriterion = ComputerSortCriterion.ID;
+                sortCriterion = ComputerSortCriteria.ID;
                 request.setAttribute("sortCriterion", gSortBy);
             } else if( gSortBy.equals("name") ) {
-                sortCriterion = ComputerSortCriterion.NAME;
+                sortCriterion = ComputerSortCriteria.NAME;
                 request.setAttribute("sortCriterion", gSortBy);
             } else if (gSortBy.equals("dateIntroduced")) {
-                sortCriterion = ComputerSortCriterion.DATE_INTRODUCED;
+                sortCriterion = ComputerSortCriteria.DATE_INTRODUCED;
                 request.setAttribute("sortCriterion", gSortBy);
             } else if (gSortBy.equals("dateDiscontinued")) {
-                sortCriterion = ComputerSortCriterion.DATE_DISCONTINUED;
+                sortCriterion = ComputerSortCriteria.DATE_DISCONTINUED;
                 request.setAttribute("sortCriterion", gSortBy);
             } else if (gSortBy.equals("company")) {
-                sortCriterion = ComputerSortCriterion.COMPANY_NAME;
+                sortCriterion = ComputerSortCriteria.COMPANY_NAME;
                 request.setAttribute("sortCriterion", gSortBy);
             } else {
                 // Default criterion
-                sortCriterion = ComputerSortCriterion.ID;
+                sortCriterion = ComputerSortCriteria.ID;
                 request.setAttribute("sortCriterion", "id");
             }
         } else {
             // Setting to default criterion
-            sortCriterion = ComputerSortCriterion.ID;
+            sortCriterion = ComputerSortCriteria.ID;
             request.setAttribute("sortCriterion", "id");
         }
 

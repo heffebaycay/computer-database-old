@@ -4,7 +4,7 @@ package fr.epf.computer.dao.impl;
 import fr.epf.computer.dao.ComputerDao;
 import fr.epf.computer.dao.manager.DaoManager;
 import fr.epf.computer.domain.Computer;
-import fr.epf.computer.utils.ComputerSortCriterion;
+import fr.epf.computer.utils.ComputerSortCriteria;
 import fr.epf.computer.utils.SortOrder;
 import fr.epf.computer.wrapper.SearchWrapper;
 
@@ -37,7 +37,7 @@ public class ComputerDaoImpl implements ComputerDao {
     }
 
     @Override
-    public SearchWrapper<Computer> getComputers(int offset, int nbRequested, ComputerSortCriterion sortCriterion, SortOrder sortOrder) {
+    public SearchWrapper<Computer> getComputers(int offset, int nbRequested, ComputerSortCriteria sortCriterion, SortOrder sortOrder) {
 
         SearchWrapper<Computer> searchWrapper = null;
         List<Computer> computers;
@@ -72,7 +72,7 @@ public class ComputerDaoImpl implements ComputerDao {
         return searchWrapper;
     }
 
-    public String generateOrderPart(String entityAlias ,ComputerSortCriterion sortCriterion, SortOrder sortOrder) {
+    private String generateOrderPart(String entityAlias ,ComputerSortCriteria sortCriterion, SortOrder sortOrder) {
         String res = entityAlias;
 
         switch (sortCriterion) {
@@ -111,7 +111,7 @@ public class ComputerDaoImpl implements ComputerDao {
      * {@inheritDoc}
      */
     @Override
-    public SearchWrapper<Computer> searchByName(String name, int offset, int nbRequested, ComputerSortCriterion sortCriterion, SortOrder sortOrder) {
+    public SearchWrapper<Computer> searchByName(String name, int offset, int nbRequested, ComputerSortCriteria sortCriterion, SortOrder sortOrder) {
         List<Computer> computers = null;
         long computerCount = -1;
         SearchWrapper<Computer> searchWrapper = null;

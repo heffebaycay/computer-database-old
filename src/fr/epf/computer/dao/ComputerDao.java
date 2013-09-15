@@ -1,7 +1,7 @@
 package fr.epf.computer.dao;
 
 import fr.epf.computer.domain.Computer;
-import fr.epf.computer.utils.ComputerSortCriterion;
+import fr.epf.computer.utils.ComputerSortCriteria;
 import fr.epf.computer.utils.SortOrder;
 import fr.epf.computer.wrapper.SearchWrapper;
 
@@ -26,7 +26,7 @@ public interface ComputerDao {
      * @param nbRequested The number of Computer elements requested
      * @return A wrapper containing both the list of matching elements as well as the total number of elements matched
      */
-    SearchWrapper<Computer> searchByName(String name, int offset, int nbRequested, ComputerSortCriterion sortCriterion, SortOrder sortOrder);
+    SearchWrapper<Computer> searchByName(String name, int offset, int nbRequested, ComputerSortCriteria sortCriterion, SortOrder sortOrder);
 
     /**
      * Create a computer in the DataSource based on an instance of Computer
@@ -41,7 +41,7 @@ public interface ComputerDao {
      * @param nbRequested The number of Computer elements requested
      * @return A wrapper containing both the list Computer elements as well as the total number of elements matched
      */
-    SearchWrapper<Computer> getComputers(int offset, int nbRequested, ComputerSortCriterion sortCriterion, SortOrder sortOrder);
+    SearchWrapper<Computer> getComputers(int offset, int nbRequested, ComputerSortCriteria sortCriterion, SortOrder sortOrder);
 
     /**
      * Update an already existing Computer object and persist it to the DataSource

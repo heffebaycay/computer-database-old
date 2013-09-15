@@ -2,6 +2,8 @@ package fr.epf.computer.dao;
 
 
 import fr.epf.computer.domain.Company;
+import fr.epf.computer.utils.CompanySortCriteria;
+import fr.epf.computer.utils.SortOrder;
 import fr.epf.computer.wrapper.SearchWrapper;
 
 import java.util.List;
@@ -22,7 +24,7 @@ public interface CompanyDao {
      * @param name Any substring of the name of the company/companies we're looking for
      * @return      A list of companies who match the given name.
      */
-    SearchWrapper<Company> searchByName(String name, int offset, int nbRequested);
+    SearchWrapper<Company> searchByName(String name, int offset, int nbRequested, CompanySortCriteria sortCriterion, SortOrder sortOrder);
 
     /**
      * Create a company in the DataSource based on an instance of Company
@@ -40,7 +42,7 @@ public interface CompanyDao {
     Company findById(long id);
 
 
-    SearchWrapper<Company> getCompanies(int offset, int nbRequested);
+    SearchWrapper<Company> getCompanies(int offset, int nbRequested, CompanySortCriteria sortCriterion, SortOrder sortOrder);
     
     void update(Company company);
 
