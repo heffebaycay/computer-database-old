@@ -36,7 +36,7 @@ public class ComputerController extends HttpServlet {
             return;
 
 
-        // Sorting arguments
+        // Parameters related to the sorting feature
         String gSortBy = request.getParameter("sortBy");
         String gSortOrder = request.getParameter("order");
         SortOrder sortOrder;
@@ -53,6 +53,7 @@ public class ComputerController extends HttpServlet {
 
         // Setting up sort criterion
         if( gSortBy != null && !gSortBy.trim().isEmpty()) {
+            // Sanitizing whatever the user sent
             if( gSortBy.equals("id") ) {
                 sortCriterion = ComputerSortCriteria.ID;
                 request.setAttribute("sortCriterion", gSortBy);
@@ -76,6 +77,7 @@ public class ComputerController extends HttpServlet {
         } else {
             // Setting to default criterion
             sortCriterion = ComputerSortCriteria.ID;
+            // Since we can't trust what the user sent, let's manually set "sortCriterion" attribute
             request.setAttribute("sortCriterion", "id");
         }
 

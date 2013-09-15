@@ -39,6 +39,9 @@ public class CompanyDaoImpl implements CompanyDao {
         return companies;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public SearchWrapper<Company> getCompanies(int offset, int nbRequested, CompanySortCriteria sortCriterion, SortOrder sortOrder) {
         SearchWrapper<Company> searchWrapper = null;
@@ -75,6 +78,19 @@ public class CompanyDaoImpl implements CompanyDao {
         return searchWrapper;
     }
 
+    /**
+     * Generates the part of the JPQL that control sorting results
+     *
+     * Basically:
+     *              SELECT c FROM Company c <strong>order by c.name desc</strong>
+     *
+     *
+     * @param entityAlias     The alias of the entity. In the example above, the alias is "c"
+     * @param sortCriterion   The criterion that should be used to sort results (hint: it's one of the attributes of
+     *                        the Company entity)
+     * @param sortOrder       The order in which the results should be sorted (asc / desc)
+     * @return                A String containing the "order by" component of the query
+     */
     private String generateOrderPart(String entityAlias, CompanySortCriteria sortCriterion, SortOrder sortOrder) {
         String res = entityAlias;
 
@@ -192,7 +208,10 @@ public class CompanyDaoImpl implements CompanyDao {
                 em.close();
         }
     }
-    
+
+    /**
+     * {@inheritDoc}
+     */
     public void update(Company company){
     	EntityManager em = null;
 

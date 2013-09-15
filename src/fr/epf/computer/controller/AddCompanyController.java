@@ -26,17 +26,19 @@ public class AddCompanyController extends HttpServlet {
         // Fetching company name POST parameter
         String companyName = request.getParameter("name");
         if(companyName != null && !companyName.isEmpty()) {
+            // We have everything we need to create a new company, so let's do that
             companyService.create(
                     new Company.Builder()
                     .name(companyName)
                     .build()
             );
 
+            // Company should have been created, so we can redirect the user to the list of companies
             response.sendRedirect(request.getContextPath() + "/company/list");
 
         } else {
             // Error: company name is null/empty
-
+            // Setting a flag to keep track of the error in the form and then redirecting to the form.
             request.setAttribute("bNameValid", false);
             doGet(request, response);
         }
@@ -44,8 +46,8 @@ public class AddCompanyController extends HttpServlet {
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
+        // Redirecting to the "add company" form
         RequestDispatcher rd = getServletContext().getRequestDispatcher("/WEB-INF/add_company.jsp");
-
         rd.forward(request, response);
     }
 }

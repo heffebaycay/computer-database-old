@@ -36,6 +36,9 @@ public class ComputerDaoImpl implements ComputerDao {
         }
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public SearchWrapper<Computer> getComputers(int offset, int nbRequested, ComputerSortCriteria sortCriterion, SortOrder sortOrder) {
 
@@ -72,6 +75,19 @@ public class ComputerDaoImpl implements ComputerDao {
         return searchWrapper;
     }
 
+    /**
+     * Generates the part of the JPQL that control sorting results
+     *
+     * Basically:
+     *              SELECT c FROM Computer c <strong>order by c.name desc</strong>
+     *
+     *
+     * @param entityAlias     The alias of the entity. In the example above, the alias is "c"
+     * @param sortCriterion   The criterion that should be used to sort results (hint: it's one of the attributes of
+     *                        the Computer entity)
+     * @param sortOrder       The order in which the results should be sorted (asc / desc)
+     * @return                A String containing the "order by" component of the query
+     */
     private String generateOrderPart(String entityAlias ,ComputerSortCriteria sortCriterion, SortOrder sortOrder) {
         String res = entityAlias;
 

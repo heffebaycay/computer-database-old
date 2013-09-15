@@ -57,6 +57,14 @@ public class Computer {
         return introduced;
     }
 
+
+    /**
+     * Returns the Introduced date attribute formatted in a human readable way (yyyy-mm-dd)
+     *
+     * Todo: remove the need for this method
+     *
+     * @return
+     */
     public String getIntroducedAsString() {
         // Creating a SDF in order to format the Introduced date the way we want
         SimpleDateFormat sdf = new SimpleDateFormat("y-MM-dd");
@@ -73,6 +81,14 @@ public class Computer {
         return discontinued;
     }
 
+
+    /**
+     * Returns the Discontinued date attribute formatted in a human readable way (yyyy-mm-dd)
+     *
+     * Todo: remove the need for this method
+     *
+     * @return
+     */
     public String getDiscontinuedAsString() {
         // Creating a SDF in order to format the Discontinued date the way we want
         SimpleDateFormat sdf = new SimpleDateFormat("y-MM-dd");
@@ -122,7 +138,7 @@ public class Computer {
 		}
 		
 		public Builder company(Company company) {
-			computer.setCompany(company); // PB : on met une companie et pas un nom de compagnie...
+			computer.setCompany(company);
 			return this;
 		}
 		

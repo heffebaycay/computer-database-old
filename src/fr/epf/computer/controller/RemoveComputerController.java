@@ -25,10 +25,12 @@ public class RemoveComputerController extends HttpServlet {
         if(computerService == null)
             return;
 
+        // Fetching the id parameter
         String strComputerId = request.getParameter("id");
         if( strComputerId == null || strComputerId.trim().isEmpty() )
             return;
 
+        // Ensuring the given id looks like a long
         long computerId;
         try {
             computerId = Long.parseLong(strComputerId);
@@ -37,6 +39,7 @@ public class RemoveComputerController extends HttpServlet {
         }
 
         if(computerId != -1) {
+            // we probably have a valid id, let's just try to remove it from the DataSource
             computerService.remove(computerId);
         }
     }

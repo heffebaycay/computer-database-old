@@ -21,8 +21,14 @@ public interface CompanyDao {
      * Searches the DataSource for companies whose names match the name argument.
      * This method is case insensitive.
      *
-     * @param name Any substring of the name of the company/companies we're looking for
-     * @return      A list of companies who match the given name.
+     * @param name           Any substring of the name of the company/companies we're looking for
+     * @param offset         The offset of the first company element that should be returned
+     * @param nbRequested    The total number of elements requested
+     * @param sortCriterion  The criterion that should be used to sort results (hint: it's one of the attributes of
+     *                       the Company entity)
+     * @param sortOrder      The order in which the results should be sorted
+     * @return               A SearchWrapper element containing both the results as a List and the total number of
+     *                       elements matched by the query
      */
     SearchWrapper<Company> searchByName(String name, int offset, int nbRequested, CompanySortCriteria sortCriterion, SortOrder sortOrder);
 
@@ -41,9 +47,24 @@ public interface CompanyDao {
      */
     Company findById(long id);
 
-
+    /**
+     * Queries the DataSource for nbRequested elements starting at the offset by the parameter with the same name.
+     *
+     * @param offset            The offset of the first Company element that should be returned
+     * @param nbRequested       The total number of elements requested
+     * @param sortCriterion     The criterion that should be used to sort results (hint: it's one of the attributes of
+     *                          the Company entity)
+     * @param sortOrder         The order in which the results should be sorted
+     * @return                  A SearchWrapper element containing both the results as a List and the total number of
+     *                          elements matched by the query
+     */
     SearchWrapper<Company> getCompanies(int offset, int nbRequested, CompanySortCriteria sortCriterion, SortOrder sortOrder);
-    
+
+    /**
+     * Update a Company already stored in the DataSource.
+     *
+     * @param company The updated Company object
+     */
     void update(Company company);
 
 }

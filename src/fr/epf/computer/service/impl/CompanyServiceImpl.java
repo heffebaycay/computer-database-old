@@ -50,10 +50,16 @@ public class CompanyServiceImpl implements CompanyService {
         return companyDao.findById(id);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     public SearchWrapper<Company> getCompanies(int offset, int nbRequested, CompanySortCriteria sortCriterion, SortOrder sortOrder) {
         return companyDao.getCompanies(offset, nbRequested, sortCriterion, sortOrder);
     }
-    
+
+    /**
+     * {@inheritDoc}
+     */
     public void update(Company company){
     	companyDao.update(company);
     }

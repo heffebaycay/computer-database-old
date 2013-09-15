@@ -20,19 +20,19 @@ import java.util.Date;
 
 @WebServlet("/computer/add")
 public class AddComputerController extends HttpServlet {
-	
-	private static final long serialVersionUID = 1L;
 
-	ComputerService computerService;
-	CompanyService companyService;
-	
-	public AddComputerController(){
-		
-		computerService = ServiceManager.INSTANCE.getComputerService();
-		
-		companyService = ServiceManager.INSTANCE.getCompanyService();
-	}
-	
+    private static final long serialVersionUID = 1L;
+
+    ComputerService computerService;
+    CompanyService companyService;
+
+    public AddComputerController(){
+
+        computerService = ServiceManager.INSTANCE.getComputerService();
+
+        companyService = ServiceManager.INSTANCE.getCompanyService();
+    }
+
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
         // Boolean controlling whether all form inputs are valid

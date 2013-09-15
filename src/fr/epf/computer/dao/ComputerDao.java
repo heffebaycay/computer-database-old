@@ -21,10 +21,13 @@ public interface ComputerDao {
      * Searches the DataSource for computers whose names match the name argument.
      * This method is case insensitive.
      *
-     * @param name Any substring of the name of the computer(s) we're looking for
-     * @param offset The offset of the first element that should be returned
-     * @param nbRequested The number of Computer elements requested
-     * @return A wrapper containing both the list of matching elements as well as the total number of elements matched
+     * @param name           Any substring of the name of the computer(s) we're looking for
+     * @param offset         The offset of the first element that should be returned
+     * @param nbRequested    The number of Computer elements requested
+     * @param sortCriterion  The criterion that should be used to sort results (hint: it's one of the attributes of
+     *                       the Computer entity)
+     * @param sortOrder      The order in which the results should be sorted
+     * @return               A wrapper containing both the list of matching elements as well as the total number of elements matched
      */
     SearchWrapper<Computer> searchByName(String name, int offset, int nbRequested, ComputerSortCriteria sortCriterion, SortOrder sortOrder);
 
@@ -37,9 +40,12 @@ public interface ComputerDao {
 
     /**
      *
-     * @param offset The offset of the first element that should be returned.
-     * @param nbRequested The number of Computer elements requested
-     * @return A wrapper containing both the list Computer elements as well as the total number of elements matched
+     * @param offset         The offset of the first element that should be returned.
+     * @param nbRequested    The number of Computer elements requested
+     * @param sortCriterion  The criterion that should be used to sort results (hint: it's one of the attributes of
+     *                       the Computer entity)
+     * @param sortOrder      The order in which the results should be sorted
+     * @return               A wrapper containing both the list Computer elements as well as the total number of elements matched
      */
     SearchWrapper<Computer> getComputers(int offset, int nbRequested, ComputerSortCriteria sortCriterion, SortOrder sortOrder);
 
@@ -53,8 +59,8 @@ public interface ComputerDao {
     /**
      * This method finds a computer from the DataSource based on a given id
      *
-     * @param id The id of the computer that should be returned
-     * @return The matching computer
+     * @param id  The id of the computer that should be returned
+     * @return    The matching computer
      */
     Computer findById(long id);
 

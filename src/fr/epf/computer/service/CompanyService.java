@@ -14,7 +14,6 @@ public interface CompanyService {
      */
     List<Company> getCompanies();
 
-
     /**
      *
      * @see fr.epf.computer.dao.CompanyDao#searchByName(String, int, int, fr.epf.computer.utils.CompanySortCriteria, fr.epf.computer.utils.SortOrder)
@@ -35,6 +34,9 @@ public interface CompanyService {
      * @see fr.epf.computer.dao.CompanyDao#getCompanies(int, int, fr.epf.computer.utils.CompanySortCriteria, fr.epf.computer.utils.SortOrder)
      */
     SearchWrapper<Company> getCompanies(int offset, int nbRequested, CompanySortCriteria sortCriterion, SortOrder sortOrder);
-    
+
+    /**
+     * @see fr.epf.computer.dao.CompanyDao#update(fr.epf.computer.domain.Company)
+     */
     void update(Company company);
 }

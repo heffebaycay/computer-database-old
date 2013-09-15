@@ -35,6 +35,9 @@ public class ComputerServiceImpl implements ComputerService {
         return computerDao.getComputers();
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public SearchWrapper<Computer> getComputers(int offset, int nbRequested, ComputerSortCriteria sortCriterion, SortOrder sortOrder) {
         return computerDao.getComputers(offset, nbRequested, sortCriterion, sortOrder);

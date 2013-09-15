@@ -33,7 +33,7 @@ public class CompanyController extends HttpServlet {
         if( companyService == null)
             return;
 
-        // Sorting arguments
+        // Parameters related to the sorting feature
         String gSortBy = request.getParameter("sortBy");
         String gSortOrder = request.getParameter("order");
         SortOrder sortOrder;
@@ -49,6 +49,7 @@ public class CompanyController extends HttpServlet {
         }
 
         if(gSortBy != null && !gSortBy.trim().isEmpty()) {
+            // Sanitizing whatever the user sent
             if(gSortBy.equals("id")) {
                 sortCriterion = CompanySortCriteria.ID;
                 request.setAttribute("sortCriterion", gSortBy);
@@ -60,7 +61,9 @@ public class CompanyController extends HttpServlet {
                 request.setAttribute("sortCriterion", "id");
             }
         } else {
+            // No criterion was sent by the user, defaulting to sorting by Computer Id
             sortCriterion = CompanySortCriteria.ID;
+            // Since we can't trust what the user sent, let's manually set "sortCriterion" attribute
             request.setAttribute("sortCriterion", "id");
         }
 
