@@ -1,4 +1,5 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="epf" uri="/WEB-INF/epf-params.tld" %>
 <jsp:include page="include/header.jsp" />
 
 <div class="container" id="main">
@@ -38,7 +39,7 @@
         <div class="form-group<c:if test="${ bValidDateIntroduced != null && bValidDateIntroduced == false }"> has-error</c:if>">
             <label for="dateIntroduced">Date introduced:</label>
             <input type="text" class="form-control" id="dateIntroduced" name="dateIntroduced"
-                   value="<c:choose><c:when test="${ bValidDateIntroduced != null && bValidDateIntroduced == false }">${dateIntroducedValue}</c:when><c:otherwise><c:if test="${ computer.introduced != null}">${computer.introducedAsString}</c:if></c:otherwise></c:choose>">
+                   value="<c:choose><c:when test="${ bValidDateIntroduced != null && bValidDateIntroduced == false }">${dateIntroducedValue}</c:when><c:otherwise><c:if test="${ computer.introduced != null}">${epf:formatDate(computer.introduced, "y-MM-dd")}</c:if></c:otherwise></c:choose>">
             <span class="help-block">
                 <c:choose>
                     <c:when test="${ bValidDateIntroduced != null && bValidDateIntroduced == false }">
@@ -53,7 +54,7 @@
         <div class="form-group<c:if test="${ bValidDateDiscontinued != null && bValidDateDiscontinued == false }"> has-error</c:if>">
             <label for="dateDiscontinued">Date discontinued:</label>
             <input type="text" class="form-control" id="dateDiscontinued" name="dateDiscontinued"
-                   value="<c:choose><c:when test="${ bValidDateDiscontinued != null && bValidDateDiscontinued == false }">${dateDiscontinuedValue}</c:when><c:otherwise><c:if test="${ computer.discontinued != null}">${computer.discontinuedAsString}</c:if></c:otherwise></c:choose>">
+                   value="<c:choose><c:when test="${ bValidDateDiscontinued != null && bValidDateDiscontinued == false }">${dateDiscontinuedValue}</c:when><c:otherwise><c:if test="${ computer.discontinued != null}">${epf:formatDate(computer.discontinued, "y-MM-dd")}</c:if></c:otherwise></c:choose>">
             <span class="help-block">
                 <c:choose>
                     <c:when test="${ bValidDateDiscontinued != null && bValidDateDiscontinued == false }">

@@ -1,5 +1,5 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+<%@ taglib prefix="epf" uri="/WEB-INF/epf-params.tld" %>
 <jsp:include page="include/header.jsp" />
 
 <div class="container">
@@ -20,8 +20,8 @@
         <table class="table table-bordered table-striped" id="table-company">
             <thead>
             <tr>
-                <th>#</th>
-                <th>Company name</th>
+                <th># <a href="<c:url value="/company/list?${epf:generateGetParams(currentPage, searchQuery, \"id\", \"asc\")}"/>"><span class="glyphicon glyphicon-arrow-up"></span></a> / <a href="<c:url value="/company/list?${epf:generateGetParams(currentPage, searchQuery, \"id\", \"desc\")}"/>"><span class="glyphicon glyphicon-arrow-down"></span></a></th>
+                <th>Company name <a href="<c:url value="/company/list?${epf:generateGetParams(currentPage, searchQuery, \"name\", \"asc\")}"/>"><span class="glyphicon glyphicon-arrow-up"></span></a> / <a href="<c:url value="/company/list?${epf:generateGetParams(currentPage, searchQuery, \"name\", \"desc\")}"/>"><span class="glyphicon glyphicon-arrow-down"></span></a></th>
                 <th>Actions</th>
             </tr>
             </thead>
@@ -42,50 +42,20 @@
             <div style="margin-left: 30px;">
                 <ul class="pagination">
                     <c:if test="${ currentPage gt 1 }">
-                        <c:choose>
-                            <c:when test="${ searchQuery != null }" >
-                                <li><a href="<c:url value="/company/list?search=${searchQuery}&p=${currentPage - 1}"/>">&laquo;</a></li>
-                            </c:when>
-                            <c:otherwise>
-                                <li><a href="<c:url value="/company/list?p=${currentPage - 1}"/>">&laquo;</a></li>
-                            </c:otherwise>
-                        </c:choose>
+                        <li><a href="<c:url value="/company/list?${epf:generateGetParams(currentPage - 1, searchQuery, sortCriterion, sortOrder)}" />">&laquo;</a></li>
                     </c:if>
-                    <c:choose>
-                        <c:when test="${searchQuery != null}">
-                            <c:forEach begin="1" end="${totalPage}" var="i">
-                                <c:choose>
-                                    <c:when test="${i == currentPage}">
-                                        <li class="active"><a>${i}</a></li>
-                                    </c:when>
-                                    <c:otherwise>
-                                        <li><a href="<c:url value="/company/list?search=${searchQuery}&p=${i}"/>">${i}</a></li>
-                                    </c:otherwise>
-                                </c:choose>
-                            </c:forEach>
-                        </c:when>
-                        <c:otherwise>
-                            <c:forEach begin="1" end="${totalPage}" var="i">
-                                <c:choose>
-                                    <c:when test="${i == currentPage}">
-                                        <li class="active"><a>${i}</a></li>
-                                    </c:when>
-                                    <c:otherwise>
-                                        <li><a href="<c:url value="/company/list?p=${i}"/>">${i}</a></li>
-                                    </c:otherwise>
-                                </c:choose>
-                            </c:forEach>
-                        </c:otherwise>
-                    </c:choose>
-                    <c:if test="${currentPage lt totalPage}">
+                    <c:forEach begin="1" end="${totalPage}" var="i">
                         <c:choose>
-                            <c:when test="${ searchQuery != null }" >
-                                <li><a href="<c:url value="/company/list?search=${searchQuery}&p=${currentPage + 1}"/>">&raquo;</a></li>
+                            <c:when test="${i == currentPage}">
+                                <li class="active"><a>${i}</a></li>
                             </c:when>
                             <c:otherwise>
-                                <li><a href="<c:url value="/company/list?p=${currentPage + 1}"/>">&raquo;</a></li>
+                                <li><a href="<c:url value="/company/list?${epf:generateGetParams(i, searchQuery, sortCriterion, sortOrder)}"/>">${i}</a></li>
                             </c:otherwise>
                         </c:choose>
+                    </c:forEach>
+                    <c:if test="${currentPage lt totalPage}">
+                        <li><a href="<c:url value="/company/list?${epf:generateGetParams(currentPage +1, searchQuery, sortCriterion, sortOrder)}" />">&raquo;</a></li>
                     </c:if>
                 </ul>
             </div>
