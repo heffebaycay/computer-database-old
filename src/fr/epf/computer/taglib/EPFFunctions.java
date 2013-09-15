@@ -31,6 +31,9 @@ public class EPFFunctions  {
     public static String formatDate(Date date, String format) {
         String strDate = null;
 
+        if(date == null)
+            return "";
+
         SimpleDateFormat sdf = new SimpleDateFormat(format);
         sdf.setTimeZone(TimeZone.getTimeZone("Europe/Paris"));
 
