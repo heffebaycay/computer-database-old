@@ -53,7 +53,7 @@
             <div style="margin-left: 30px;">
                 <ul class="pagination">
                     <c:if test="${ currentPage gt 1 }">
-                        <li><a href="<c:url value="/computer/list?${epf:generateGetParams(currentPage - 1, searchQuery, sortCriterion, sortOrder)}"/>"></a></li>
+                        <li><a href="<c:url value="/computer/list?${epf:generateGetParams(currentPage - 1, searchQuery, sortCriterion, sortOrder)}"/>">&laquo;</a></li>
                     </c:if>
                     <c:forEach begin="1" end="${totalPage}" var="i">
                         <c:choose>
