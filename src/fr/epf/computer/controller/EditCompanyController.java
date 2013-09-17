@@ -34,7 +34,7 @@ public class EditCompanyController extends HttpServlet{
 		}
 		
 		// We need to get the ID to edit the company
-		String strCompanyId = request.getParameter("id");
+		String strCompanyId = request.getParameter("companyId");
 		// Verifying if ID is a long :
 		long test;
 		try{
