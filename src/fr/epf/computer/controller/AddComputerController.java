@@ -112,15 +112,17 @@ public class AddComputerController extends HttpServlet {
         if( bEverythingOkay ) {
             // Everything went according to plan, so we can build a full instance of Computer
             // ComputerService will take care of persisting that new instance
-            computerService.create( new Computer.Builder()
-                    .name(name)
-                    .introduced(introduced)
-                    .discontinued(discontinued)
-                    .company(company)
-                    .build());
 
-            // All done, let's go back to the list
-            response.sendRedirect(request.getContextPath() + "/computer/list");
+            Computer computer = new Computer.Builder()
+                                .name(name)
+                                .discontinued(discontinued)
+                                .introduced(introduced)
+                                .company(company)
+                                .build();
+            computerService.create( computer );
+
+            // All done, let's go to the edit page of this computer
+            response.sendRedirect(request.getContextPath() + "/computer/edit?id=" + computer.getId() + "&msg=addSuccess");
         }
         else {
             // Tough luck, user didn't fill the form with valid input

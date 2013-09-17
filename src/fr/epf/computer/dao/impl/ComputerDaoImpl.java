@@ -49,16 +49,33 @@ public class ComputerDaoImpl implements ComputerDao {
         try {
             em = DaoManager.INSTANCE.getEntityManager();
 
-            String orderPart = generateOrderPart("c", sortCriterion, sortOrder);
+            String countSqlQuery;
+            String sqlQuery;
+            String orderPart;
+
+            /**
+             * Working around an issue in the ORM where Computers who don't have any company wouldn't be returned
+             * when sorting by Company
+             */
+            if(sortCriterion.equals(ComputerSortCriteria.COMPANY_NAME)) {
+                orderPart = generateOrderPart("c2", sortCriterion, sortOrder);
+                sqlQuery = "SELECT c FROM Computer c left outer join c.company c2 order by " + orderPart;
+                countSqlQuery = "SELECT COUNT (c) FROM Computer c left outer join c.company c2 order by " + orderPart;
+            } else {
+                orderPart = generateOrderPart("c", sortCriterion, sortOrder);
+                sqlQuery = "SELECT c FROM Computer c order by " + orderPart;
+                countSqlQuery = "SELECT COUNT (c) FROM Computer c order by " + orderPart;
+            }
+
 
             computers = em.createQuery(
-                    "SELECT c FROM Computer c order by " + orderPart
+                    sqlQuery
             ).setFirstResult(offset)
             .setMaxResults(nbRequested)
             .getResultList()
             ;
 
-            long totalComputerCount = (Long) em.createQuery("SELECT COUNT (c) FROM Computer c order by " + orderPart).getSingleResult();
+            long totalComputerCount = (Long) em.createQuery(countSqlQuery).getSingleResult();
 
             searchWrapper = new SearchWrapper<Computer>()
                                 .setResults(computers)
@@ -105,7 +122,7 @@ public class ComputerDaoImpl implements ComputerDao {
                 res += ".introduced";
                 break;
             case COMPANY_NAME:
-                res += ".company.name";
+                res += ".name";
                 break;
             default:
                 res += ".id";
@@ -135,17 +152,34 @@ public class ComputerDaoImpl implements ComputerDao {
         EntityManager em = null;
         try {
             em = DaoManager.INSTANCE.getEntityManager();
-            String orderPart = generateOrderPart("c", sortCriterion, sortOrder);
+
+            String countSqlQuery;
+            String sqlQuery;
+            String orderPart;
+
+            /**
+             * Working around an issue in the ORM where Computers who don't have any company wouldn't be returned
+             * when sorting by Company
+             */
+            if(sortCriterion.equals(ComputerSortCriteria.COMPANY_NAME)) {
+                orderPart = generateOrderPart("c2", sortCriterion, sortOrder);
+                sqlQuery = "SELECT c FROM Computer c LEFT OUTER JOIN c.company c2 WHERE c.name LIKE :compName order by " + orderPart;
+                countSqlQuery = "SELECT COUNT(c) FROM Computer c LEFT OUTER JOIN c.company c2 WHERE c.name LIKE :compName order by " + orderPart;
+            } else {
+                orderPart = generateOrderPart("c", sortCriterion, sortOrder);
+                sqlQuery = "SELECT c FROM Computer c WHERE c.name LIKE :compName order by " + orderPart;
+                countSqlQuery = "SELECT COUNT(c) FROM Computer c WHERE c.name LIKE :compName order by " + orderPart;
+            }
 
             computers = em.createQuery(
-                    "SELECT  c FROM Computer c WHERE c.name LIKE :compName order by " + orderPart
+                    sqlQuery
             ).setParameter("compName", "%" + name + "%")
              .setFirstResult(offset)
              .setMaxResults(nbRequested)
             .getResultList();
 
             computerCount = (Long) em.createQuery(
-                    "SELECT COUNT(c) FROM Computer c WHERE c.name LIKE :compName order by " + orderPart
+                    countSqlQuery
             ).setParameter("compName", "%" + name + "%")
                     .getSingleResult();
 

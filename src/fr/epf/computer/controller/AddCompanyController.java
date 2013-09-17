@@ -27,14 +27,14 @@ public class AddCompanyController extends HttpServlet {
         String companyName = request.getParameter("name");
         if(companyName != null && !companyName.isEmpty()) {
             // We have everything we need to create a new company, so let's do that
-            companyService.create(
-                    new Company.Builder()
-                    .name(companyName)
-                    .build()
-            );
 
-            // Company should have been created, so we can redirect the user to the list of companies
-            response.sendRedirect(request.getContextPath() + "/company/list");
+            Company company = new Company.Builder()
+                            .name(companyName)
+                            .build();
+            companyService.create( company );
+
+            // Company should have been created, so we can redirect the user to edit page of this company
+            response.sendRedirect(request.getContextPath() + "/company/edit?id=" + company.getId() + "&msg=addSuccess");
 
         } else {
             // Error: company name is null/empty
