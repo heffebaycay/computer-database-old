@@ -34,7 +34,7 @@ public class EditCompanyController extends HttpServlet{
 		}
 		
 		// We need to get the ID to edit the company
-		String strCompanyId = request.getParameter("id");
+		String strCompanyId = request.getParameter("companyId");
 		// Verifying if ID is a long :
 		long test;
 		try{
@@ -69,7 +69,13 @@ public class EditCompanyController extends HttpServlet{
 	}
 	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
+
+        // Checking whether user was redirected after creating a company
+        String addOk = request.getParameter("msg");
+        if(addOk != null && addOk.equals("addSuccess") ) {
+            request.setAttribute("bAddSuccess", true);
+        }
+
 		// We need to get the ID to edit the company
 		String strCompanyId = request.getParameter("id");
 		if(strCompanyId == null){
