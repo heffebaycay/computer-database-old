@@ -19,6 +19,11 @@
             </c:otherwise>
         </c:choose>
     </c:if>
+    <c:if test="${ bAddSuccess != null && bAddSuccess == true}">
+        <div class="alert alert-success">
+            <strong>Success!</strong> Computer was added successfully. Feel free to take a moment to check for any typo!
+        </div>
+    </c:if>
 
     <form method="post" role="form" action="<c:url value="/computer/edit?id=${computer.id}"/>">
         <div class="form-group<c:if test="${ bValidComputerName != null && bValidComputerName == false }"> has-error</c:if>">

@@ -159,6 +159,12 @@ public class EditComputerController extends HttpServlet {
         if(computerService == null && companyService != null)
             return;
 
+        // Checking whether user was redirected after creating a computer
+        String addOk = request.getParameter("msg");
+        if(addOk != null && addOk.equals("addSuccess") ) {
+            request.setAttribute("bAddSuccess", true);
+        }
+
         // Getting computer Id transmitted via a GET parameter
         String strComputerId = request.getParameter("id");
         if(strComputerId == null) {
