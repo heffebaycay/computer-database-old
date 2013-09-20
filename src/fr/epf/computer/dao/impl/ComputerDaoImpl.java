@@ -163,12 +163,12 @@ public class ComputerDaoImpl implements ComputerDao {
              */
             if(sortCriterion.equals(ComputerSortCriteria.COMPANY_NAME)) {
                 orderPart = generateOrderPart("c2", sortCriterion, sortOrder);
-                sqlQuery = "SELECT c FROM Computer c LEFT OUTER JOIN c.company c2 WHERE c.name LIKE :compName order by " + orderPart;
-                countSqlQuery = "SELECT COUNT(c) FROM Computer c LEFT OUTER JOIN c.company c2 WHERE c.name LIKE :compName order by " + orderPart;
+                sqlQuery = "SELECT c FROM Computer c LEFT OUTER JOIN c.company c2 WHERE c.name LIKE :compName OR c.company.name LIKE :compName order by " + orderPart;
+                countSqlQuery = "SELECT COUNT(c) FROM Computer c LEFT OUTER JOIN c.company c2 WHERE c.name LIKE :compName OR c.company.name LIKE :compName order by " + orderPart;
             } else {
                 orderPart = generateOrderPart("c", sortCriterion, sortOrder);
-                sqlQuery = "SELECT c FROM Computer c WHERE c.name LIKE :compName order by " + orderPart;
-                countSqlQuery = "SELECT COUNT(c) FROM Computer c WHERE c.name LIKE :compName order by " + orderPart;
+                sqlQuery = "SELECT c FROM Computer c WHERE c.name LIKE :compName OR c.company.name LIKE :compName order by " + orderPart;
+                countSqlQuery = "SELECT COUNT(c) FROM Computer c WHERE c.name LIKE :compName OR c.company.name LIKE :compName order by " + orderPart;
             }
 
             computers = em.createQuery(
