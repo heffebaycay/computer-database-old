@@ -3,6 +3,7 @@ package fr.epf.computer.controller;
 import fr.epf.computer.domain.Company;
 import fr.epf.computer.service.CompanyService;
 import fr.epf.computer.service.impl.CompanyServiceImpl;
+import fr.epf.computer.utils.EResult;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -23,9 +24,11 @@ public class AddCompanyController extends HttpServlet {
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
+        int eResult = 0;
+
         // Fetching company name POST parameter
         String companyName = request.getParameter("name");
-        if(companyName != null && !companyName.isEmpty()) {
+        if(companyName != null && !companyName.trim().isEmpty()) {
             // We have everything we need to create a new company, so let's do that
 
             Company company = new Company.Builder()
@@ -39,7 +42,9 @@ public class AddCompanyController extends HttpServlet {
         } else {
             // Error: company name is null/empty
             // Setting a flag to keep track of the error in the form and then redirecting to the form.
-            request.setAttribute("bNameValid", false);
+            eResult |= EResult.INVALID_COMPANY_NAME;
+            request.setAttribute("eResult", eResult);
+            request.setAttribute("companyNameValue", companyName);
             doGet(request, response);
         }
     }

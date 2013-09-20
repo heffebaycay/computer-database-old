@@ -10,6 +10,7 @@ import fr.epf.computer.wrapper.SearchWrapper;
 
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
+import javax.persistence.RollbackException;
 import java.util.List;
 
 public class ComputerDaoImpl implements ComputerDao {
@@ -18,8 +19,10 @@ public class ComputerDaoImpl implements ComputerDao {
      * {@inheritDoc}
      */
     @Override
-    public void remove(long id) {
+    public boolean remove(long id) {
         EntityManager em = null;
+
+        boolean res = false;
 
         try {
             em = DaoManager.INSTANCE.getEntityManager();
@@ -29,11 +32,19 @@ public class ComputerDaoImpl implements ComputerDao {
                 em.getTransaction().begin();
                 em.remove(computer);
                 em.getTransaction().commit();
+                res = true;
+            } else {
+                res = false;
             }
+        } catch(RollbackException e) {
+            // Transaction failed & rollback failed
+            res = false;
         } finally {
             if(em != null)
                 em.close();
         }
+
+        return res;
     }
 
     /**
@@ -93,7 +104,7 @@ public class ComputerDaoImpl implements ComputerDao {
     }
 
     /**
-     * Generates the part of the JPQL that control sorting results
+     * Generates the part of the JPQL query that control sorting results
      *
      * Basically:
      *              SELECT c FROM Computer c <strong>order by c.name desc</strong>
@@ -106,35 +117,35 @@ public class ComputerDaoImpl implements ComputerDao {
      * @return                A String containing the "order by" component of the query
      */
     private String generateOrderPart(String entityAlias ,ComputerSortCriteria sortCriterion, SortOrder sortOrder) {
-        String res = entityAlias;
+        StringBuffer stringBuffer = new StringBuffer(entityAlias);
 
         switch (sortCriterion) {
             case ID:
-                res += ".id";
+                stringBuffer.append(".id");
                 break;
             case NAME:
-                res += ".name";
+                stringBuffer.append(".name");
                 break;
             case DATE_DISCONTINUED:
-                res += ".discontinued";
+                stringBuffer.append(".discontinued");
                 break;
             case DATE_INTRODUCED:
-                res += ".introduced";
+                stringBuffer.append(".introduced");
                 break;
             case COMPANY_NAME:
-                res += ".name";
+                stringBuffer.append(".name");
                 break;
             default:
-                res += ".id";
+                stringBuffer.append(".id");
         }
 
         if(sortOrder.equals( SortOrder.DESC )) {
-            res += " desc";
+            stringBuffer.append(" desc");
         } else {
-            res += " asc";
+            stringBuffer.append(" asc");
         }
 
-        return res;
+        return stringBuffer.toString();
     }
 
     public ComputerDaoImpl() {
@@ -163,12 +174,12 @@ public class ComputerDaoImpl implements ComputerDao {
              */
             if(sortCriterion.equals(ComputerSortCriteria.COMPANY_NAME)) {
                 orderPart = generateOrderPart("c2", sortCriterion, sortOrder);
-                sqlQuery = "SELECT c FROM Computer c LEFT OUTER JOIN c.company c2 WHERE c.name LIKE :compName order by " + orderPart;
-                countSqlQuery = "SELECT COUNT(c) FROM Computer c LEFT OUTER JOIN c.company c2 WHERE c.name LIKE :compName order by " + orderPart;
+                sqlQuery = "SELECT c FROM Computer c LEFT OUTER JOIN c.company c2 WHERE c.name LIKE :compName OR c.company.name LIKE :compName order by " + orderPart;
+                countSqlQuery = "SELECT COUNT(c) FROM Computer c LEFT OUTER JOIN c.company c2 WHERE c.name LIKE :compName OR c.company.name LIKE :compName order by " + orderPart;
             } else {
                 orderPart = generateOrderPart("c", sortCriterion, sortOrder);
-                sqlQuery = "SELECT c FROM Computer c WHERE c.name LIKE :compName order by " + orderPart;
-                countSqlQuery = "SELECT COUNT(c) FROM Computer c WHERE c.name LIKE :compName order by " + orderPart;
+                sqlQuery = "SELECT c FROM Computer c WHERE c.name LIKE :compName OR c.company.name LIKE :compName order by " + orderPart;
+                countSqlQuery = "SELECT COUNT(c) FROM Computer c WHERE c.name LIKE :compName OR c.company.name LIKE :compName order by " + orderPart;
             }
 
             computers = em.createQuery(

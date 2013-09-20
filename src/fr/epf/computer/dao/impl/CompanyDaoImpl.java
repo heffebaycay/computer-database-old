@@ -18,6 +18,24 @@ public class CompanyDaoImpl implements CompanyDao {
 
     }
 
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public List<Company> getCompaniesAlphabetic() {
+        EntityManager em = null;
+        List<Company> companies = null;
+
+        try {
+            em = DaoManager.INSTANCE.getEntityManager();
+            companies = em.createQuery("SELECT c FROM Company c order by c.name ASC").getResultList();
+        } finally {
+            if( em != null)
+                em.close();
+        }
+
+        return companies;
+    }
 
     /**
      * {@inheritDoc}
@@ -79,7 +97,7 @@ public class CompanyDaoImpl implements CompanyDao {
     }
 
     /**
-     * Generates the part of the JPQL that control sorting results
+     * Generates the part of the JPQL query that control sorting results
      *
      * Basically:
      *              SELECT c FROM Company c <strong>order by c.name desc</strong>
@@ -92,26 +110,26 @@ public class CompanyDaoImpl implements CompanyDao {
      * @return                A String containing the "order by" component of the query
      */
     private String generateOrderPart(String entityAlias, CompanySortCriteria sortCriterion, SortOrder sortOrder) {
-        String res = entityAlias;
+        StringBuffer stringBuffer = new StringBuffer(entityAlias);
 
         switch (sortCriterion) {
             case ID:
-                res += ".id";
+                stringBuffer.append(".id");
                 break;
             case NAME:
-                res += ".name";
+                stringBuffer.append(".name");
                 break;
             default:
-                res += ".id";
+                stringBuffer.append(".id");
         }
 
         if(sortOrder.equals( SortOrder.DESC )) {
-            res += " desc";
+            stringBuffer.append(" desc");
         } else {
-            res += " asc";
+            stringBuffer.append(" asc");
         }
 
-        return res;
+        return stringBuffer.toString();
     }
 
     /**

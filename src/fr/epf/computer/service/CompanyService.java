@@ -15,6 +15,11 @@ public interface CompanyService {
     List<Company> getCompanies();
 
     /**
+     * @see fr.epf.computer.dao.CompanyDao#getCompaniesAlphabetic()
+     */
+    List<Company> getCompaniesAlphabetic();
+
+    /**
      *
      * @see fr.epf.computer.dao.CompanyDao#searchByName(String, int, int, fr.epf.computer.utils.CompanySortCriteria, fr.epf.computer.utils.SortOrder)
      */

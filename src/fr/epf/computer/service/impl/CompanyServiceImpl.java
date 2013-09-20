@@ -24,6 +24,14 @@ public class CompanyServiceImpl implements CompanyService {
      * {@inheritDoc}
      */
     @Override
+    public List<Company> getCompaniesAlphabetic() {
+        return companyDao.getCompaniesAlphabetic();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
     public List<Company> getCompanies() {
         return companyDao.getCompanies();
     }

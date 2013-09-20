@@ -9,6 +9,10 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.io.PrintWriter;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 
 @WebServlet(name = "RemoveComputerController", value = "/computer/remove")
@@ -25,6 +29,8 @@ public class RemoveComputerController extends HttpServlet {
         if(computerService == null)
             return;
 
+        boolean bSuccess = false;
+
         // Fetching the id parameter
         String strComputerId = request.getParameter("id");
         if( strComputerId == null || strComputerId.trim().isEmpty() )
@@ -40,8 +46,22 @@ public class RemoveComputerController extends HttpServlet {
 
         if(computerId != -1) {
             // we probably have a valid id, let's just try to remove it from the DataSource
-            computerService.remove(computerId);
+            bSuccess = computerService.remove(computerId);
         }
+
+        /**
+         * Returning information about the success of the removal operation in a JSON object
+         */
+        JSONObject objReply = new JSONObject();
+        try {
+            objReply.put("success", bSuccess);
+        } catch (JSONException e) {
+            return;
+        }
+
+        PrintWriter out = response.getWriter();
+        out.print( objReply.toString() );
+
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

@@ -21,4 +21,14 @@
             ${epf:formatDate( computer.introduced, "y-MM-dd" )}
         </example>
     </function>
+    <function>
+        <name>bwAnd</name>
+        <function-class>fr.epf.computer.taglib.EPFFunctions</function-class>
+        <function-signature>int bwAnd(int,int)</function-signature>
+    </function>
+    <function>
+        <name>eResult</name>
+        <function-class>fr.epf.computer.taglib.EPFFunctions</function-class>
+        <function-signature>int eResult(java.lang.String)</function-signature>
+    </function>
 </taglib>
