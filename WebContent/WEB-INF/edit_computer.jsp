@@ -5,9 +5,9 @@
 <div class="container" id="main">
     <h1>Edit Computer</h1>
 
-    <c:if test="${ bEverythingOkay != null}">
+    <c:if test="${ eResult != null }">
         <c:choose>
-            <c:when test="${bEverythingOkay == false}">
+            <c:when test="${ eResult != 0 }">
                 <div class="alert alert-danger">
                     <strong>Oh snap!</strong> It seems you left some mistakes in our sweet form.
                 </div>
@@ -26,13 +26,13 @@
     </c:if>
 
     <form method="post" role="form" action="<c:url value="/computer/edit?id=${computer.id}"/>">
-        <div class="form-group<c:if test="${ bValidComputerName != null && bValidComputerName == false }"> has-error</c:if>">
+        <div class="form-group<c:if test="${ eResult != null && epf:bwAnd(eResult, epf:eResult(\"INVALID_COMPUTER_NAME\")) != 0}"> has-error</c:if>">
             <label for="name">Computer name:</label>
             <input type="text" class="form-control" id="name" name="name"
-                   value="<c:choose><c:when test="${ bValidComputerName != null && bValidComputerName == false }">${computerNameValue}</c:when><c:otherwise><c:if test="${computer.name != null}">${computer.name}</c:if></c:otherwise></c:choose>">
+                   value="<c:choose><c:when test="${computerNameValue != null}">${computerNameValue}</c:when><c:otherwise><c:if test="${computer.name != null}">${computer.name}</c:if></c:otherwise></c:choose>">
             <span class="help-block">
                 <c:choose>
-                    <c:when test="${ bValidComputerName != null && bValidComputerName == false }">
+                    <c:when test="${ eResult != null && epf:bwAnd(eResult, epf:eResult(\"INVALID_COMPUTER_NAME\")) != 0 }">
                         Please enter a valid name for the computer
                     </c:when>
                     <c:otherwise>
@@ -41,13 +41,13 @@
                 </c:choose>
             </span>
         </div>
-        <div class="form-group<c:if test="${ bValidDateIntroduced != null && bValidDateIntroduced == false }"> has-error</c:if>">
+        <div class="form-group<c:if test="${ eResult != null && epf:bwAnd(eResult, epf:eResult(\"INVALID_COMPUTER_INTRODUCED_DATE\")) != 0}"> has-error</c:if>">
             <label for="dateIntroduced">Date introduced:</label>
             <input type="text" class="form-control" id="dateIntroduced" name="dateIntroduced"
-                   value="<c:choose><c:when test="${ bValidDateIntroduced != null && bValidDateIntroduced == false }">${dateIntroducedValue}</c:when><c:otherwise><c:if test="${ computer.introduced != null}">${epf:formatDate(computer.introduced, "y-MM-dd")}</c:if></c:otherwise></c:choose>">
+                   value="<c:choose><c:when test="${dateIntroducedValue != null}">${dateIntroducedValue}</c:when><c:otherwise><c:if test="${ computer.introduced != null}">${epf:formatDate(computer.introduced, "y-MM-dd")}</c:if></c:otherwise></c:choose>">
             <span class="help-block">
                 <c:choose>
-                    <c:when test="${ bValidDateIntroduced != null && bValidDateIntroduced == false }">
+                    <c:when test="${ eResult != null && epf:bwAnd(eResult, epf:eResult(\"INVALID_COMPUTER_INTRODUCED_DATE\")) != 0 }">
                         Please enter a valid date in the following format: YYYY-MM-DD
                     </c:when>
                     <c:otherwise>
@@ -56,13 +56,13 @@
                 </c:choose>
             </span>
         </div>
-        <div class="form-group<c:if test="${ bValidDateDiscontinued != null && bValidDateDiscontinued == false }"> has-error</c:if>">
+        <div class="form-group<c:if test="${ eResult != null && epf:bwAnd(eResult, epf:eResult(\"INVALID_COMPUTER_DISCONTINUED_DATE\")) != 0 }"> has-error</c:if>">
             <label for="dateDiscontinued">Date discontinued:</label>
             <input type="text" class="form-control" id="dateDiscontinued" name="dateDiscontinued"
-                   value="<c:choose><c:when test="${ bValidDateDiscontinued != null && bValidDateDiscontinued == false }">${dateDiscontinuedValue}</c:when><c:otherwise><c:if test="${ computer.discontinued != null}">${epf:formatDate(computer.discontinued, "y-MM-dd")}</c:if></c:otherwise></c:choose>">
+                   value="<c:choose><c:when test="${ dateDiscontinuedValue != null }">${dateDiscontinuedValue}</c:when><c:otherwise><c:if test="${ computer.discontinued != null}">${epf:formatDate(computer.discontinued, "y-MM-dd")}</c:if></c:otherwise></c:choose>">
             <span class="help-block">
                 <c:choose>
-                    <c:when test="${ bValidDateDiscontinued != null && bValidDateDiscontinued == false }">
+                    <c:when test="${ eResult != null && epf:bwAnd(eResult, epf:eResult(\"INVALID_COMPUTER_DISCONTINUED_DATE\")) != 0 }">
                         Please enter a valid date in the following format: YYYY-MM-DD
                     </c:when>
                     <c:otherwise>
@@ -71,13 +71,13 @@
                 </c:choose>
             </span>
         </div>
-        <div class="form-group<c:if test="${ bValidCompany != null && bValidCompany == false }"> has-error</c:if>">
+        <div class="form-group<c:if test="${ eResult != null && epf:bwAnd(eResult, epf:eResult(\"INVALID_COMPANY\")) != 0 }"> has-error</c:if>">
             <label for="company">Company name:</label>
             <select name="company" id="company">
                 <c:forEach items="${requestScope.companies}" var="company">
                     <option value="${company.id}"
                             <c:choose>
-                                <c:when test="${ bValidCompany != null && bValidCompany == false }">
+                                <c:when test="${ companyIdValue != null }">
                                     <c:if test="${company.id == companyIdValue}">
                                         selected="selected"
                                     </c:if>
@@ -92,7 +92,7 @@
             </select>
             <span class="help-block">
                 <c:choose>
-                    <c:when test="${ bValidCompany != null && bValidCompany == false }">
+                    <c:when test="${ eResult != null && epf:bwAnd(eResult, epf:eResult(\"INVALID_COMPANY\")) != 0 }">
                         Please select a valid company from the list above.
                     </c:when>
                     <c:otherwise>

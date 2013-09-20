@@ -13,6 +13,7 @@ import fr.epf.computer.domain.Company;
 import fr.epf.computer.service.CompanyService;
 import fr.epf.computer.service.impl.CompanyServiceImpl;
 import fr.epf.computer.service.manager.ServiceManager;
+import fr.epf.computer.utils.EResult;
 
 @WebServlet("/company/edit") // need change
 public class EditCompanyController extends HttpServlet{
@@ -26,11 +27,14 @@ public class EditCompanyController extends HttpServlet{
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 		boolean bEverythingOkay = true;
+
+        int eResult = 0;
 		
 		String newName = request.getParameter("name"); // Getting the new company name
+        request.setAttribute("companyNameValue", newName);
 		if(newName == null || newName.trim().isEmpty()){ // Verify the name
-			bEverythingOkay = false;
-			request.setAttribute("bEverythingOkay", false);
+            // Setting the right EResult flag
+            eResult |= EResult.INVALID_COMPANY_NAME;
 		}
 		
 		// We need to get the ID to edit the company
@@ -44,22 +48,23 @@ public class EditCompanyController extends HttpServlet{
 			response.sendRedirect(request.getContextPath() + "/company/add");
 			return;
 		}
-		
-		if(bEverythingOkay) {
+
+
+		if(eResult == 0) {
 			Company foundCompany = companyService.findById(test);
 			if(foundCompany == null){
 				response.sendRedirect(request.getContextPath() + "/company/add");
 				return;
 			}
-			
 			foundCompany.setName(newName);
-			
+
 			companyService.update(foundCompany);
-			
-			request.setAttribute("bEverythingOkay", true);
+
+            request.setAttribute("eResult", eResult);
 			request.setAttribute("id", strCompanyId);
 			doGet(request, response);
 		} else {
+            request.setAttribute("eResult", eResult);
 			request.setAttribute("id", strCompanyId);
 			doGet(request, response);
 		}
