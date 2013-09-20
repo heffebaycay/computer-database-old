@@ -53,11 +53,24 @@ public class EPFFunctions  {
         return strDate;
     }
 
+    /**
+     * Executes a logical AND operation on both integer parameters and returns the result
+     *
+     * @param i    First integer to use
+     * @param j    Second integer to use
+     * @return     The result of the AND operation between both integers
+     */
     public static int bwAnd(int i, int j) {
         int res = i & j;
         return  res;
     }
 
+    /**
+     * Returns the value of the EResult attribute called "eResultName" using reflection.
+     *
+     * @param eResultName   The name of the EResult attribute (e.g.: <strong>INVALID_COMPUTER_NAME</strong> )
+     * @return              The value of the attribute from EResult called eResultName, or 0 if things go wrong.
+     */
     public static int eResult(String eResultName) {
         try {
             Field field = EResult.class.getField(eResultName);
