@@ -1,5 +1,8 @@
 package fr.epf.computer.taglib;
 
+import fr.epf.computer.utils.EResult;
+
+import java.lang.reflect.Field;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.TimeZone;
@@ -48,6 +51,22 @@ public class EPFFunctions  {
         strDate = sdf.format(date);
 
         return strDate;
+    }
+
+    public static int bwAnd(int i, int j) {
+        int res = i & j;
+        return  res;
+    }
+
+    public static int eResult(String eResultName) {
+        try {
+            Field field = EResult.class.getField(eResultName);
+            return field.getInt(null);
+        } catch (NoSuchFieldException e ) {
+            return 0;
+        } catch ( IllegalAccessException e ) {
+            return 0;
+        }
     }
 
 }

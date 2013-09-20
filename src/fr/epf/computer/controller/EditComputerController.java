@@ -6,6 +6,7 @@ import fr.epf.computer.service.CompanyService;
 import fr.epf.computer.service.ComputerService;
 import fr.epf.computer.service.impl.CompanyServiceImpl;
 import fr.epf.computer.service.impl.ComputerServiceImpl;
+import fr.epf.computer.utils.EResult;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -32,9 +33,7 @@ public class EditComputerController extends HttpServlet {
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-        // Boolean controlling whether all form inputs are valid
-        // Will be set to "false" if things go bad
-        boolean bEverythingOkay = true;
+        int eResult = 0;
 
         // Computer name
         String name = request.getParameter("name");
@@ -42,8 +41,7 @@ public class EditComputerController extends HttpServlet {
         request.setAttribute("computerNameValue", name);
         if(name == null || name.isEmpty()) {
             // Error: invalid computer name
-            request.setAttribute("bValidComputerName", false);
-            bEverythingOkay = false;
+            eResult |= EResult.INVALID_COMPUTER_NAME;
         }
 
 
@@ -67,8 +65,7 @@ public class EditComputerController extends HttpServlet {
         }
         if(introduced == null) {
             // Error: date introduced is invalid
-            request.setAttribute("bValidDateIntroduced", false);
-            bEverythingOkay = false;
+            eResult |= EResult.INVALID_COMPUTER_INTRODUCED_DATE;
         }
 
         String recup2 = request.getParameter("dateDiscontinued"); // Get the String here too
@@ -84,8 +81,7 @@ public class EditComputerController extends HttpServlet {
         }
         if(discontinued == null) {
             // Error: date discontinued is invalid
-            request.setAttribute("bValidDateDiscontinued", false);
-            bEverythingOkay = false;
+            eResult |= EResult.INVALID_COMPUTER_DISCONTINUED_DATE;
         }
 
 
@@ -103,8 +99,7 @@ public class EditComputerController extends HttpServlet {
         }
         if(company == null) {
             // Error: invalid company selected
-            request.setAttribute("bValidCompany", false);
-            bEverythingOkay = false;
+            eResult |= EResult.INVALID_COMPANY;
         }
 
         String strComputerId = request.getParameter("computerId");
@@ -118,7 +113,7 @@ public class EditComputerController extends HttpServlet {
             return;
         }
 
-        if( bEverythingOkay ) {
+        if( eResult == 0 ) {
             // Everything went according to plan, so we can build a full instance of Computer
             // ComputerService will take care of persisting that new instance
 
@@ -137,19 +132,11 @@ public class EditComputerController extends HttpServlet {
 
             computerService.update(computer);
 
-            // All done, let's go back to the edit form
-            //response.sendRedirect("/computer/edit?id=" + computer.getId());
-            request.setAttribute("bEverythingOkay", true);
-            request.setAttribute("id", strComputerId );
-            doGet(request, response);
         }
-        else {
-            // Tough luck, user didn't fill the form with valid input
-            // Let's just redirect him back to the form and show him what he did wrong
-            request.setAttribute("bEverythingOkay", false);
-            request.setAttribute("id", strComputerId );
-            doGet(request, response);
-        }
+        // All done, let's go back to the edit form
+        request.setAttribute("eResult", eResult);
+        request.setAttribute("id", strComputerId );
+        doGet(request, response);
 
     }
 
