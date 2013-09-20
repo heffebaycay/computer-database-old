@@ -179,7 +179,7 @@ public class EditComputerController extends HttpServlet {
         request.setAttribute("computer", computer);
 
         // Fetching the list of all Companies
-        List<Company> companies = companyService.getCompanies();
+        List<Company> companies = companyService.getCompaniesAlphabetic();
         request.setAttribute("companies", companies);
 
         RequestDispatcher rd = getServletContext().getRequestDispatcher("/WEB-INF/edit_computer.jsp");

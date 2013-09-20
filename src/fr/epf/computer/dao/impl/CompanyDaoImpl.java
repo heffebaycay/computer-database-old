@@ -18,6 +18,24 @@ public class CompanyDaoImpl implements CompanyDao {
 
     }
 
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public List<Company> getCompaniesAlphabetic() {
+        EntityManager em = null;
+        List<Company> companies = null;
+
+        try {
+            em = DaoManager.INSTANCE.getEntityManager();
+            companies = em.createQuery("SELECT c FROM Company c order by c.name ASC").getResultList();
+        } finally {
+            if( em != null)
+                em.close();
+        }
+
+        return companies;
+    }
 
     /**
      * {@inheritDoc}

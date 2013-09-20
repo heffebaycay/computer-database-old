@@ -130,7 +130,7 @@ public class AddComputerController extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         
         //Companies list send in request :
-        request.setAttribute("companies", companyService.getCompanies());
+        request.setAttribute("companies", companyService.getCompaniesAlphabetic());
 
         RequestDispatcher rd = getServletContext().getRequestDispatcher("/WEB-INF/add_computer.jsp");
         rd.forward(request, response);
