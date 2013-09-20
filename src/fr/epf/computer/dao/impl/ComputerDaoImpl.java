@@ -93,7 +93,7 @@ public class ComputerDaoImpl implements ComputerDao {
     }
 
     /**
-     * Generates the part of the JPQL that control sorting results
+     * Generates the part of the JPQL query that control sorting results
      *
      * Basically:
      *              SELECT c FROM Computer c <strong>order by c.name desc</strong>

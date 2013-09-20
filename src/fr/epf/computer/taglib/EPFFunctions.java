@@ -7,7 +7,7 @@ import java.util.TimeZone;
 public class EPFFunctions  {
 
     /**
-     * Generates the end of the URL with the different GET parameters, for pagination links
+     * Generates the end of the List URL with the different GET parameters, for pagination links
      *
      * Sample result: search=Macintosh&p=3&sortBy=name&order=asc
      *
@@ -28,6 +28,13 @@ public class EPFFunctions  {
 
     }
 
+    /**
+     * Returns a string representation of a Date object in the format defined by the format parameter
+     *
+     * @param date     The base Date object
+     * @param format   Format the date should be returned in. See the SimpleDateFormat JavaDoc for more details.
+     * @return         A string representation of the date object given in the format defined by the format parameter
+     */
     public static String formatDate(Date date, String format) {
         String strDate = null;
 
@@ -35,6 +42,7 @@ public class EPFFunctions  {
             return "";
 
         SimpleDateFormat sdf = new SimpleDateFormat(format);
+        // While this is pretty bad in term of design, let's just assume our reference TimeZone is Paris'
         sdf.setTimeZone(TimeZone.getTimeZone("Europe/Paris"));
 
         strDate = sdf.format(date);
