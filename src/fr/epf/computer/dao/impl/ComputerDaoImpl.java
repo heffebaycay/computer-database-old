@@ -106,35 +106,35 @@ public class ComputerDaoImpl implements ComputerDao {
      * @return                A String containing the "order by" component of the query
      */
     private String generateOrderPart(String entityAlias ,ComputerSortCriteria sortCriterion, SortOrder sortOrder) {
-        String res = entityAlias;
+        StringBuffer stringBuffer = new StringBuffer(entityAlias);
 
         switch (sortCriterion) {
             case ID:
-                res += ".id";
+                stringBuffer.append(".id");
                 break;
             case NAME:
-                res += ".name";
+                stringBuffer.append(".name");
                 break;
             case DATE_DISCONTINUED:
-                res += ".discontinued";
+                stringBuffer.append(".discontinued");
                 break;
             case DATE_INTRODUCED:
-                res += ".introduced";
+                stringBuffer.append(".introduced");
                 break;
             case COMPANY_NAME:
-                res += ".name";
+                stringBuffer.append(".name");
                 break;
             default:
-                res += ".id";
+                stringBuffer.append(".id");
         }
 
         if(sortOrder.equals( SortOrder.DESC )) {
-            res += " desc";
+            stringBuffer.append(" desc");
         } else {
-            res += " asc";
+            stringBuffer.append(" asc");
         }
 
-        return res;
+        return stringBuffer.toString();
     }
 
     public ComputerDaoImpl() {
