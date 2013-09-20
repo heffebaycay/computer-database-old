@@ -106,8 +106,8 @@
                     Company: <span id="modalComputerCompany"></span>
                 </div>
                 <div class="modal-footer">
+                    <button type="button" class="btn btn-danger" onClick="deleteComputer();">Delete</button>
                     <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary" onClick="deleteComputer();">Delete</button>
                 </div>
             </div>
         </div>
