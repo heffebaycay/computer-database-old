@@ -59,18 +59,12 @@ public class EditCompanyController extends HttpServlet{
 			foundCompany.setName(newName);
 
 			companyService.update(foundCompany);
+        }
 
-            request.setAttribute("eResult", eResult);
-			request.setAttribute("id", strCompanyId);
-			doGet(request, response);
-		} else {
-            request.setAttribute("eResult", eResult);
-			request.setAttribute("id", strCompanyId);
-			doGet(request, response);
-		}
-		
-		
-		
+        request.setAttribute("eResult", eResult);
+        request.setAttribute("id", strCompanyId);
+        doGet(request, response);
+
 	}
 	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

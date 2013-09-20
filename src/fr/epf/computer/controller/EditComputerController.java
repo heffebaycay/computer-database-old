@@ -132,19 +132,11 @@ public class EditComputerController extends HttpServlet {
 
             computerService.update(computer);
 
-            // All done, let's go back to the edit form
-            //response.sendRedirect("/computer/edit?id=" + computer.getId());
-            request.setAttribute("eResult", eResult);
-            request.setAttribute("id", strComputerId );
-            doGet(request, response);
         }
-        else {
-            // Tough luck, user didn't fill the form with valid input
-            // Let's just redirect him back to the form and show him what he did wrong
-            request.setAttribute("eResult", eResult);
-            request.setAttribute("id", strComputerId );
-            doGet(request, response);
-        }
+        // All done, let's go back to the edit form
+        request.setAttribute("eResult", eResult);
+        request.setAttribute("id", strComputerId );
+        doGet(request, response);
 
     }
 
