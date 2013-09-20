@@ -88,7 +88,14 @@
                     "<c:url value="/computer/remove"/>",
                     {id: computerId},
                     function(data) {
-                        location.reload();
+                        var json = JSON.parse(data);
+                        var success = json.success;
+
+                        if(success == undefined || success == false) {
+                            alert("Failed to remove element. Please check that the element exists before attempting to remove it.");
+                        } else {
+                            location.reload()
+                        }
                     }
             );
         }

@@ -10,6 +10,7 @@ import fr.epf.computer.wrapper.SearchWrapper;
 
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
+import javax.persistence.RollbackException;
 import java.util.List;
 
 public class ComputerDaoImpl implements ComputerDao {
@@ -18,8 +19,10 @@ public class ComputerDaoImpl implements ComputerDao {
      * {@inheritDoc}
      */
     @Override
-    public void remove(long id) {
+    public boolean remove(long id) {
         EntityManager em = null;
+
+        boolean res = false;
 
         try {
             em = DaoManager.INSTANCE.getEntityManager();
@@ -29,11 +32,19 @@ public class ComputerDaoImpl implements ComputerDao {
                 em.getTransaction().begin();
                 em.remove(computer);
                 em.getTransaction().commit();
+                res = true;
+            } else {
+                res = false;
             }
+        } catch(RollbackException e) {
+            // Transaction failed & rollback failed
+            res = false;
         } finally {
             if(em != null)
                 em.close();
         }
+
+        return res;
     }
 
     /**
