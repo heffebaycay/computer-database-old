@@ -1,5 +1,8 @@
 package fr.epf.computer.taglib;
 
+import fr.epf.computer.utils.EResult;
+
+import java.lang.reflect.Field;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.TimeZone;
@@ -7,7 +10,7 @@ import java.util.TimeZone;
 public class EPFFunctions  {
 
     /**
-     * Generates the end of the URL with the different GET parameters, for pagination links
+     * Generates the end of the List URL with the different GET parameters, for pagination links
      *
      * Sample result: search=Macintosh&p=3&sortBy=name&order=asc
      *
@@ -28,6 +31,13 @@ public class EPFFunctions  {
 
     }
 
+    /**
+     * Returns a string representation of a Date object in the format defined by the format parameter
+     *
+     * @param date     The base Date object
+     * @param format   Format the date should be returned in. See the SimpleDateFormat JavaDoc for more details.
+     * @return         A string representation of the date object given in the format defined by the format parameter
+     */
     public static String formatDate(Date date, String format) {
         String strDate = null;
 
@@ -35,11 +45,41 @@ public class EPFFunctions  {
             return "";
 
         SimpleDateFormat sdf = new SimpleDateFormat(format);
+        // While this is pretty bad in term of design, let's just assume our reference TimeZone is Paris'
         sdf.setTimeZone(TimeZone.getTimeZone("Europe/Paris"));
 
         strDate = sdf.format(date);
 
         return strDate;
+    }
+
+    /**
+     * Executes a logical AND operation on both integer parameters and returns the result
+     *
+     * @param i    First integer to use
+     * @param j    Second integer to use
+     * @return     The result of the AND operation between both integers
+     */
+    public static int bwAnd(int i, int j) {
+        int res = i & j;
+        return  res;
+    }
+
+    /**
+     * Returns the value of the EResult attribute called "eResultName" using reflection.
+     *
+     * @param eResultName   The name of the EResult attribute (e.g.: <strong>INVALID_COMPUTER_NAME</strong> )
+     * @return              The value of the attribute from EResult called eResultName, or 0 if things go wrong.
+     */
+    public static int eResult(String eResultName) {
+        try {
+            Field field = EResult.class.getField(eResultName);
+            return field.getInt(null);
+        } catch (NoSuchFieldException e ) {
+            return 0;
+        } catch ( IllegalAccessException e ) {
+            return 0;
+        }
     }
 
 }

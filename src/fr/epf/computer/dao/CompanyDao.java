@@ -18,6 +18,13 @@ public interface CompanyDao {
     List<Company> getCompanies();
 
     /**
+     * This method returns the list of all companies stored in the DataSource, ordered by name.
+     *
+     * @return The list of all companies ordered by name
+     */
+    List<Company> getCompaniesAlphabetic();
+
+    /**
      * Searches the DataSource for companies whose names match the name argument.
      * This method is case insensitive.
      *

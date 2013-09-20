@@ -55,8 +55,8 @@ public class ComputerServiceImpl implements ComputerService {
      * {@inheritDoc}
      */
     @Override
-    public void remove(long id) {
-        computerDao.remove(id);
+    public boolean remove(long id) {
+        return computerDao.remove(id);
     }
 
     /**

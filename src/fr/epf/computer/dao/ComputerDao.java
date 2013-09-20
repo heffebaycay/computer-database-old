@@ -67,6 +67,7 @@ public interface ComputerDao {
     /**
      * This method removes a computer from the datasource based on its Id
      * @param id Id of the computer object to be removed
+     * @return Boolean indicating success (true) or failure (false) of the removal operation
      */
-    void remove(long id);
+    boolean remove(long id);
 }
