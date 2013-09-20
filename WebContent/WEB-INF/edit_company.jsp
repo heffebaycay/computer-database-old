@@ -1,6 +1,5 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="epf" uri="/WEB-INF/epf-params.tld" %>
-<%@ page import="fr.epf.computer.utils.EResult" %>
 <jsp:include page="include/header.jsp" />
 
 <div class="container" id="main">
